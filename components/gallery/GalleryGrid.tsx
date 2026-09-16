@@ -30,23 +30,30 @@ export function GalleryGrid() {
               aria-label={`View ${item.caption || item.alt}`}
             >
               <span className="gallery-index">
-                MEMORY / {String(index + 1).padStart(2, "0")}
+                ARCHIVE_{String(index + 1).padStart(3, "0")} / MEMORY
               </span>
               <div className="gallery-media">
                 <motion.div
-                  variants={{
-                    rest: { scale: 1 },
-                    active: { scale: reduced ? 1 : 1.035 },
-                  }}
-                  transition={{ duration: 0.65, ease: easeOut }}
+                  initial={reduced ? false : { clipPath: "inset(0 0 100% 0)" }}
+                  whileInView={{ clipPath: "inset(0 0 0% 0)" }}
+                  viewport={{ once: true, amount: 0.14 }}
+                  transition={{ duration: reduced ? 0 : 0.7, ease: easeOut }}
                 >
-                  <Photo
-                    src={item.src}
-                    alt={item.alt}
-                    label={String(index + 1).padStart(2, "0")}
-                    className="gallery-photo"
-                    sizes="(max-width: 640px) 100vw, 60vw"
-                  />
+                  <motion.div
+                    variants={{
+                      rest: { scale: 1 },
+                      active: { scale: reduced ? 1 : 1.035 },
+                    }}
+                    transition={{ duration: 0.65, ease: easeOut }}
+                  >
+                    <Photo
+                      src={item.src}
+                      alt={item.alt}
+                      label={String(index + 1).padStart(2, "0")}
+                      className="gallery-photo"
+                      sizes="(max-width: 640px) 100vw, 60vw"
+                    />
+                  </motion.div>
                 </motion.div>
                 <motion.span
                   className="gallery-overlay"

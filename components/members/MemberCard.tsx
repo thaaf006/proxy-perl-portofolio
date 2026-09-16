@@ -31,24 +31,32 @@ export function MemberCard({
           className={`member-card tone-${index % 4}`}
           aria-label={`View ${member.name} profile`}
         >
+          <span className="member-border-trace" aria-hidden="true" />
           <span className="member-index">
             <span>INDEX / {number}</span>
             <span aria-hidden="true">↗</span>
           </span>
           <div className="member-media">
             <motion.div
-              variants={{
-                rest: { scale: 1 },
-                active: { scale: reduced ? 1 : 1.035 },
-              }}
-              transition={{ duration: 0.55, ease: easeOut }}
+              initial={reduced ? false : { clipPath: "inset(0 0 100% 0)" }}
+              whileInView={{ clipPath: "inset(0 0 0% 0)" }}
+              viewport={{ once: true, amount: 0.16 }}
+              transition={{ duration: reduced ? 0 : 0.6, ease: easeOut }}
             >
-              <Photo
-                src={member.image}
-                alt={`Portrait of ${member.name}`}
-                label={number}
-                className="member-photo"
-              />
+              <motion.div
+                variants={{
+                  rest: { scale: 1 },
+                  active: { scale: reduced ? 1 : 1.035 },
+                }}
+                transition={{ duration: 0.55, ease: easeOut }}
+              >
+                <Photo
+                  src={member.image}
+                  alt={`Portrait of ${member.name}`}
+                  label={number}
+                  className="member-photo"
+                />
+              </motion.div>
             </motion.div>
             <motion.span
               className="member-view"

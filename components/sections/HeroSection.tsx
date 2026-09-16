@@ -5,6 +5,7 @@ import { Photo } from "@/components/shared/Photo";
 import { HeroEntrance } from "@/components/shared/HeroEntrance";
 import { HeroTerminal } from "@/components/shared/HeroTerminal";
 import { HeroAtmosphere } from "@/components/shared/HeroAtmosphere";
+import { TechnicalTicker } from "@/components/shared/TechnicalTicker";
 
 export function HeroSection() {
   return (
@@ -80,6 +81,7 @@ export function HeroSection() {
         </a>
         <span>12 PEOPLE / ONE STORY</span>
       </div>
+      <TechnicalTicker />
     </section>
   );
 }

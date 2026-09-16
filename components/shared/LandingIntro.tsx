@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { group } from "@/data/group";
 import { members } from "@/data/members";
 import { easeOut } from "@/lib/motion";
+import { PixelCamel } from "./PixelCamel";
 
 const ReadyContext = createContext(true);
 const sessionKey = "proxy-perl-intro-seen";
@@ -85,6 +86,23 @@ export function LandingIntro({ children }: { children: React.ReactNode }) {
                 {group.name.replace(" ", " / ")}
               </div>
               <p className="intro-command">$ initializing proxy_perl...</p>
+              <div className="intro-progress-scene">
+                <motion.div
+                  className="intro-camel-runner"
+                  initial={{ left: "0%" }}
+                  animate={{ left: ["0%", "35%", "70%", "calc(100% - 44px)"] }}
+                  transition={{
+                    duration: mobile ? 0.8 : 1.15,
+                    times: [0, 0.22, 0.7, 1],
+                    ease: "easeInOut",
+                  }}
+                >
+                  <PixelCamel
+                    className="intro-camel"
+                    walking={phase === "intro"}
+                  />
+                </motion.div>
+              </div>
               <div className="intro-progress">
                 <motion.span
                   initial={{ scaleX: 0 }}

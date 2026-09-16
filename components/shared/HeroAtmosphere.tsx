@@ -9,6 +9,7 @@ import {
   useTransform,
   useReducedMotion,
 } from "motion/react";
+import { PixelCamel } from "./PixelCamel";
 
 export function HeroAtmosphere() {
   const root = useRef<HTMLDivElement>(null);
@@ -16,6 +17,10 @@ export function HeroAtmosphere() {
   const y = useMotionValue(-500);
   const smoothX = useSpring(x, { stiffness: 85, damping: 25 });
   const smoothY = useSpring(y, { stiffness: 85, damping: 25 });
+  const reactX = useMotionValue(0);
+  const reactY = useMotionValue(0);
+  const decorX = useSpring(reactX, { stiffness: 55, damping: 22 });
+  const decorY = useSpring(reactY, { stiffness: 55, damping: 22 });
   const reduced = useReducedMotion();
   const [inView, setInView] = useState(true);
   const { scrollY } = useScroll();
@@ -36,6 +41,8 @@ export function HeroAtmosphere() {
       const bounds = hero.getBoundingClientRect();
       x.set(event.clientX - bounds.left);
       y.set(event.clientY - bounds.top);
+      reactX.set(((event.clientX - bounds.left) / bounds.width - 0.5) * 14);
+      reactY.set(((event.clientY - bounds.top) / bounds.height - 0.5) * 10);
       root.current?.setAttribute("data-spotlight", "");
     };
     const observer = new IntersectionObserver(([entry]) =>
@@ -51,7 +58,7 @@ export function HeroAtmosphere() {
       hero.removeEventListener("pointerleave", hide);
       media.removeEventListener("change", hide);
     };
-  }, [x, y]);
+  }, [reactX, reactY, x, y]);
 
   return (
     <div
@@ -64,12 +71,68 @@ export function HeroAtmosphere() {
         <div className="ambient-grid" />
         <div className="ambient-shape ambient-blue" />
         <div className="ambient-shape ambient-purple" />
-        <div className="code-fragments">
+        <motion.div className="code-fragments" style={{ x: decorX, y: decorY }}>
           {["{ }", "::", ".pm", "</>", "$", "[]"].map((text, index) => (
             <span className={`fragment fragment-${index}`} key={text}>
               {text}
             </span>
           ))}
+        </motion.div>
+        <svg
+          className="digital-landscape"
+          viewBox="0 0 1200 260"
+          preserveAspectRatio="none"
+        >
+          <path
+            className="landscape-horizon"
+            d="M0 190H150v-15h120v12h155v-36h95v21h160v-49h100v34h150v-18h120v51h150"
+          />
+          <path
+            className="landscape-step"
+            d="M0 231h185v-10h110v-14h160v9h92v-20h145v13h118v-31h170v17h220"
+          />
+          {[70, 270, 520, 780, 980, 1130].map((cx, index) => (
+            <circle
+              key={cx}
+              cx={cx}
+              cy={[190, 187, 172, 157, 139, 190][index]}
+              r="3"
+            />
+          ))}
+        </svg>
+        <motion.div
+          className="perl-constellation"
+          style={{ x: decorX, y: decorY }}
+        >
+          <svg viewBox="0 0 360 230">
+            <path d="M25 165L95 90L165 126L225 42L320 82M95 90L120 195L265 178L320 82M165 126L265 178" />
+            <circle className="perl-signal" r="3" />
+          </svg>
+          {[
+            [".pl", 7, 68],
+            [".pm", 25, 32],
+            ["$_", 45, 48],
+            ["::", 63, 12],
+            ["@", 88, 29],
+            ["%", 72, 76],
+            ["PERL", 31, 84],
+          ].map(([label, left, top], index) => (
+            <span
+              key={String(label)}
+              className={`constellation-node node-${index}`}
+              style={{ left: `${left}%`, top: `${top}%` }}
+            >
+              <i />
+              {label}
+            </span>
+          ))}
+        </motion.div>
+        <div className="hero-camel-route">
+          <PixelCamel
+            className="hero-camel"
+            walking
+            label="Distant pixel camel"
+          />
         </div>
       </motion.div>
       <motion.div

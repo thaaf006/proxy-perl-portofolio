@@ -2,12 +2,16 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { easeOut } from "@/lib/motion";
+import { useLandingReady } from "./LandingIntro";
 
 export function HeroTerminal({ count, name }: { count: number; name: string }) {
   const reduced = useReducedMotion();
+  const ready = useLandingReady();
   return (
     <div
       className="hero-terminal"
+      data-cursor="terminal"
+      data-ready={ready}
       role="img"
       aria-label={`${name}: ${count} members, initialized`}
     >
@@ -29,7 +33,7 @@ export function HeroTerminal({ count, name }: { count: number; name: string }) {
           <span>
             <motion.i
               initial={false}
-              animate={{ scaleX: reduced ? 1 : [0, 1] }}
+              animate={{ scaleX: !ready ? 0 : reduced ? 1 : [0, 1] }}
               transition={{
                 duration: reduced ? 0 : 0.8,
                 delay: reduced ? 0 : 0.65,

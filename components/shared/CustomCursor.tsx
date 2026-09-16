@@ -26,7 +26,13 @@ export function CustomCursor() {
         return;
       }
       const target = event.target instanceof Element ? event.target : null;
-      const interactive = target?.closest("a,button,[role=button]");
+      if (target?.closest(".landing-intro")) {
+        hide();
+        return;
+      }
+      const interactive = target?.closest(
+        "a,button,[role=button],[data-cursor=terminal]",
+      );
       if (
         (!interactive && target?.closest("p,h1,h2,h3,dt,dd,pre")) ||
         target?.closest("input,textarea,[contenteditable=true]")

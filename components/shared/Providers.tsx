@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import { MotionConfig } from "motion/react";
 import { CustomCursor } from "./CustomCursor";
 import { ScrollProgress } from "./ScrollProgress";
+import { LandingIntro } from "./LandingIntro";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -14,9 +15,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
       disableTransitionOnChange
     >
       <MotionConfig reducedMotion="user">
-        <ScrollProgress />
-        {children}
-        <CustomCursor />
+        <LandingIntro>
+          <ScrollProgress />
+          {children}
+          <CustomCursor />
+        </LandingIntro>
       </MotionConfig>
     </ThemeProvider>
   );

@@ -1474,3 +1474,311 @@ h2,
     padding-top: 48px;
   }
 }
+
+/* Landing narrative: a short brand intro, followed by a quiet ambient field. */
+.landing-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  background: var(--background);
+  color: var(--foreground);
+  overflow: hidden;
+  border-bottom: 1px solid var(--primary);
+}
+.intro-frame {
+  width: min(430px, calc(100% - 48px));
+}
+.intro-index,
+.intro-command,
+.intro-log,
+.intro-welcome,
+.intro-skip {
+  font-family: var(--font-geist-mono), monospace;
+}
+.intro-index {
+  color: var(--muted-foreground);
+  font-size: 10px;
+  letter-spacing: 0.13em;
+}
+.intro-brand {
+  font-size: clamp(30px, 5vw, 46px);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  margin-top: 22px;
+}
+.intro-command {
+  font-size: 12px;
+  color: var(--primary);
+  margin-top: 30px;
+}
+.intro-progress {
+  height: 3px;
+  background: var(--muted);
+  margin-block: 22px;
+  overflow: hidden;
+}
+.intro-progress > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary);
+  transform-origin: left;
+}
+.intro-log {
+  font-size: 11px;
+  line-height: 2.4;
+  color: var(--muted-foreground);
+}
+.intro-log p {
+  display: flex;
+  gap: 18px;
+}
+.intro-log p > span:first-child {
+  opacity: 0.65;
+}
+.intro-log p > span:last-child {
+  margin-left: auto;
+  color: var(--primary);
+}
+.intro-welcome {
+  color: var(--primary);
+  font-size: 13px;
+  margin-top: 24px;
+}
+.intro-skip {
+  position: absolute;
+  bottom: 30px;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: var(--muted-foreground);
+  text-align: center;
+  padding-inline: 20px;
+}
+.hero {
+  position: relative;
+  isolation: isolate;
+}
+.hero-atmosphere {
+  position: absolute;
+  z-index: -1;
+  inset: 0 -40px;
+  overflow: hidden;
+  pointer-events: none;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 8%,
+    #000 86%,
+    transparent
+  );
+}
+.hero-depth {
+  position: absolute;
+  inset: 0;
+}
+.ambient-grid {
+  position: absolute;
+  inset: -64px;
+  opacity: 0.52;
+  background-image: radial-gradient(
+    var(--muted-foreground) 0.6px,
+    transparent 0.6px
+  );
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse at 46% 45%, #000, transparent 74%);
+  animation: grid-drift 36s linear infinite;
+}
+@keyframes grid-drift {
+  to {
+    transform: translate(32px, 32px);
+  }
+}
+.ambient-shape {
+  position: absolute;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  opacity: 0.065;
+  animation: ambient-drift 28s ease-in-out infinite alternate;
+}
+.ambient-blue {
+  top: -230px;
+  left: 22%;
+  background: radial-gradient(circle, var(--primary), transparent 68%);
+}
+.ambient-purple {
+  bottom: -240px;
+  right: -90px;
+  background: radial-gradient(circle, var(--secondary-accent), transparent 68%);
+  animation-delay: -14s;
+  animation-direction: alternate-reverse;
+}
+@keyframes ambient-drift {
+  from {
+    transform: translate(-25px, -8px) scale(0.95);
+  }
+  to {
+    transform: translate(35px, 24px) scale(1.08);
+  }
+}
+.code-fragments {
+  position: absolute;
+  inset: 0;
+  font-family: var(--font-geist-mono), monospace;
+  color: var(--muted-foreground);
+}
+.fragment {
+  position: absolute;
+  font-size: clamp(25px, 3vw, 44px);
+  opacity: 0.11;
+  animation: fragment-drift 22s ease-in-out infinite alternate;
+}
+.fragment-0 {
+  top: 17px;
+  left: 13%;
+}
+.fragment-1 {
+  top: 40%;
+  left: 59%;
+  animation-duration: 26s;
+  animation-delay: -12s;
+}
+.fragment-2 {
+  bottom: 65px;
+  left: 48%;
+  font-size: 25px;
+  animation-direction: alternate-reverse;
+}
+.fragment-3 {
+  top: 18px;
+  right: 10%;
+  font-size: 28px;
+  animation-delay: -8s;
+}
+.fragment-4 {
+  bottom: 23%;
+  right: 5px;
+  animation-duration: 30s;
+}
+.fragment-5 {
+  bottom: 18px;
+  left: 25%;
+  font-size: 24px;
+  animation-delay: -17s;
+}
+@keyframes fragment-drift {
+  from {
+    transform: translate(0, -5px) rotate(-3deg);
+  }
+  to {
+    transform: translate(10px, 9px) rotate(2deg);
+  }
+}
+.hero-spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 440px;
+  height: 440px;
+  margin: -220px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--primary) 8%, transparent),
+    transparent 68%
+  );
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+.hero-atmosphere[data-spotlight] .hero-spotlight {
+  opacity: 1;
+}
+.hero-atmosphere[data-paused="true"] * {
+  animation-play-state: paused;
+}
+.hero-stage[data-ready="false"] .code-caret,
+.hero-terminal[data-ready="false"] .terminal-command,
+.hero-terminal[data-ready="false"] .terminal-result {
+  animation-play-state: paused;
+}
+.code-caret {
+  animation-iteration-count: infinite;
+}
+.hero-bottom a svg {
+  animation: scroll-hint 3s ease-in-out infinite;
+}
+@keyframes scroll-hint {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+@media (max-width: 1023px) {
+  .hero-atmosphere {
+    inset: 0 -24px;
+  }
+  .hero-depth {
+    transform: none !important;
+  }
+  .hero-spotlight {
+    display: none;
+  }
+  .fragment-1,
+  .fragment-4,
+  .fragment-5 {
+    display: none;
+  }
+  .fragment-0 {
+    left: auto;
+    right: 18px;
+    top: 25px;
+  }
+  .fragment-2 {
+    left: auto;
+    right: 28px;
+    bottom: 39%;
+  }
+  .fragment-3 {
+    top: 36%;
+    right: 24px;
+  }
+  .ambient-shape {
+    width: 360px;
+    height: 360px;
+    opacity: 0.045;
+    animation-duration: 45s;
+  }
+  .ambient-grid {
+    opacity: 0.35;
+    animation-duration: 60s;
+  }
+  .fragment {
+    animation-duration: 35s;
+    opacity: 0.08;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .landing-intro {
+    display: none;
+  }
+  .hero-depth {
+    transform: none !important;
+  }
+  .hero-spotlight {
+    display: none;
+  }
+  .hero-atmosphere *,
+  .code-caret,
+  .hero-bottom a svg {
+    animation: none !important;
+  }
+}
+@media (max-width: 767px) {
+  .hero-atmosphere {
+    inset-inline: -20px;
+  }
+}

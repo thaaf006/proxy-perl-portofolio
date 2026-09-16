@@ -36,8 +36,14 @@ All three implementation checkpoint commits remain local. Nothing was pushed or 
 
 The redesign preserves member/gallery data, Base UI dialogs, local image fallbacks, and next-themes. No dependencies were added. Geist Mono labels, cobalt accents, restrained technical grids, an editorial wordmark, and a small decorative Perl terminal establish the PROXY PERL identity.
 
-`lib/motion.ts` contains shared easing and reveal timing. `HeroEntrance` sequences the masked hero lines in about 1.2 seconds. `HeroTerminal` types once; its progress bar and the short underscore blink settle without continuous loops. `Reveal` runs section/card reveals once. Member/gallery hover animations use Motion while keyboard and touch users retain visible controls.
+`lib/motion.ts` contains shared easing and reveal timing. `HeroEntrance` sequences the masked hero lines in about 1.2 seconds. `HeroTerminal` types once; its progress bar settles, while the Hero underscore blinks quietly until reduced motion is requested. `Reveal` runs section/card reveals once. Member/gallery hover animations use Motion while keyboard and touch users retain visible controls.
 
 `CustomCursor` uses Motion values and spring followers, without rendering React on pointer movement. It activates only for mouse input on fine-pointer, hover-capable viewports at least 1024px wide. Touch, mobile, reduced motion, keyboard navigation, and text selection use native cursor behavior. `ScrollProgress` uses a direct Motion value for the thin reading progress line.
 
 Reduced motion disables the custom cursor, typing, blinking, animated reveals, and large transitions. The server-rendered content stays visible before JavaScript loads.
+
+## Landing intro and ambient Hero
+
+`LandingIntro` presents a decorative branded introduction once per browser session (sessionStorage key `proxy-perl-intro-seen`). It takes 2 seconds on desktop and 1.5 seconds on mobile, including the upward curtain exit. The Hero entrance begins during the final curtain reveal. Any key or pointer press skips it; refreshes, anchor links, restored scroll positions, and reduced motion skip the full sequence. Blocked storage never blocks the website, and content remains server-rendered underneath. This is a brand sequence, not a network-loading indicator.
+
+`HeroAtmosphere` adds a slowly drifting dot field, six decorative code fragments, and two low-opacity accent gradients. A Motion-value spotlight follows fine desktop pointers; decorative scroll depth is capped at 26px. Animation pauses when the Hero is offscreen. Mobile/tablet uses three fragments, slower ambient movement, and no spotlight or scroll depth. Reduced motion disables these movements and the looping underscore. No new dependencies or external assets are needed.

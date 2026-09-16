@@ -4,10 +4,12 @@ import { members } from "@/data/members";
 import { Photo } from "@/components/shared/Photo";
 import { HeroEntrance } from "@/components/shared/HeroEntrance";
 import { HeroTerminal } from "@/components/shared/HeroTerminal";
+import { HeroAtmosphere } from "@/components/shared/HeroAtmosphere";
 
 export function HeroSection() {
   return (
     <section id="home" className="container hero">
+      <HeroAtmosphere />
       <HeroEntrance>
         <div className="hero-heading">
           <p className="eyebrow" data-enter>

@@ -21,7 +21,7 @@ export function HeroSection() {
                   WE ARE
                 </span>
               </span>
-              <span className="hero-mask" data-enter="line">
+              <span className="hero-mask hero-identity-mask" data-enter="line">
                 <HeroIdentity />
               </span>
             </h1>

@@ -314,6 +314,9 @@ const Shuffle = ({
           strip.replaceChildren(real);
           strip.style.transform = 'none';
           strip.style.willChange = 'auto';
+          // The rolling strip needs clipping while it moves, but retaining that
+          // clip after resolution cuts into Geist's side bearings and descenders.
+          w.style.overflow = 'visible';
         });
       };
 

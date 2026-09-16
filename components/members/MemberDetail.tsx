@@ -1,8 +1,10 @@
 "use client";
+import { useEffect, useState } from "react";
 import { Dialog } from "@base-ui/react/dialog";
+import { useReducedMotion } from "motion/react";
 import { CodeXml, Camera, Mail, X } from "lucide-react";
 import type { Member } from "@/data/members";
-import { Photo } from "@/components/shared/Photo";
+import ProfileCard from "@/components/ProfileCard";
 function socialUrl(value?: string) {
   if (!value) return undefined;
   try {
@@ -23,6 +25,15 @@ export function MemberDetail({
   member: Member;
   number: string;
 }) {
+  const reduced = useReducedMotion();
+  const [finePointer, setFinePointer] = useState(false);
+  useEffect(() => {
+    const query = matchMedia("(hover: hover) and (pointer: fine)");
+    const sync = () => setFinePointer(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
   const socials = [
     { label: "Instagram", href: socialUrl(member.instagram), icon: Camera },
     { label: "GitHub", href: socialUrl(member.github), icon: CodeXml },
@@ -48,12 +59,20 @@ export function MemberDetail({
           </Dialog.Close>
         </div>
         <div className="profile-layout">
-          <Photo
-            src={member.image}
-            alt={`Portrait of ${member.name}`}
-            label={number}
-            className="profile-photo"
-            sizes="(max-width: 640px) 90vw, 350px"
+          <ProfileCard
+            className="proxy-profile-card"
+            avatarUrl={member.image || ""}
+            name={member.name}
+            title={member.role}
+            handle={member.nim}
+            status={member.origin}
+            fallbackLabel={number}
+            innerGradient="none"
+            behindGlowEnabled={false}
+            showUserInfo={false}
+            enableTilt={finePointer && !reduced}
+            enableMobileTilt={false}
+            tiltIntensity={0.24}
           />
           <div className="profile-content">
             <p className="role-label">{member.role}</p>

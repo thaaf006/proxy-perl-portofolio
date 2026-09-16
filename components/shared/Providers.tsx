@@ -2,9 +2,9 @@
 
 import { ThemeProvider } from "next-themes";
 import { MotionConfig } from "motion/react";
-import { CustomCursor } from "./CustomCursor";
 import { ScrollProgress } from "./ScrollProgress";
 import { LandingIntro } from "./LandingIntro";
+import { SplashCursorLayer } from "./SplashCursorLayer";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -18,7 +18,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <LandingIntro>
           <ScrollProgress />
           {children}
-          <CustomCursor />
+          <SplashCursorLayer />
         </LandingIntro>
       </MotionConfig>
     </ThemeProvider>

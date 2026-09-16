@@ -1453,6 +1453,177 @@ h2,
     transform: none;
   }
 }
+
+/* React Bits integration: one metallic Hero field, one decode, one fluid pointer. */
+.hero {
+  min-height: calc(100svh - 82px);
+}
+.hero-atmosphere {
+  inset: 0 -40px;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 87%, transparent 100%);
+}
+.hero-molten {
+  position: absolute;
+  inset: 0;
+}
+.hero-metal-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--background) 38%, transparent),
+      transparent 54%,
+      color-mix(in srgb, var(--background) 30%, transparent)
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--background) 18%, transparent),
+      transparent 42%,
+      color-mix(in srgb, var(--background) 52%, transparent)
+    );
+}
+.hero-perl-marks {
+  position: absolute;
+  inset: 0;
+  font-family: var(--font-geist-mono), monospace;
+  color: var(--foreground);
+}
+.hero-perl-mark {
+  position: absolute;
+  font-size: clamp(14px, 1.55vw, 22px);
+  letter-spacing: 0.08em;
+  opacity: 0.18;
+  text-shadow: 0 1px 18px color-mix(in srgb, var(--background) 76%, transparent);
+  animation: metal-mark-drift 18s ease-in-out infinite alternate;
+}
+.hero-perl-mark-0 {
+  top: 13%;
+  right: 8%;
+}
+.hero-perl-mark-1 {
+  top: 43%;
+  left: 48%;
+  animation-duration: 22s;
+  animation-direction: alternate-reverse;
+}
+.hero-perl-mark-2 {
+  right: 3%;
+  bottom: 24%;
+  animation-delay: -9s;
+}
+.hero-perl-mark-3 {
+  left: 32%;
+  bottom: 9%;
+  animation-duration: 26s;
+  animation-delay: -13s;
+}
+@keyframes metal-mark-drift {
+  from {
+    transform: translate3d(-2px, -3px, 0);
+  }
+  to {
+    transform: translate3d(7px, 6px, 0);
+  }
+}
+.hero-identity {
+  position: relative;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  font-size: clamp(80px, 13.7vw, 192px);
+  white-space: pre-line;
+  line-height: 0.87;
+}
+.hero-identity-static,
+.hero-identity-shuffle {
+  display: inline !important;
+  visibility: visible;
+  white-space: pre-line !important;
+  font: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit;
+  text-transform: none;
+  background: linear-gradient(
+    to bottom,
+    var(--foreground) 0%,
+    var(--foreground) 47%,
+    var(--primary) 53%,
+    var(--primary) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.hero-identity .code-caret {
+  color: var(--primary);
+}
+.hero-stage,
+.hero-bottom,
+.technical-ticker {
+  position: relative;
+  z-index: 1;
+}
+.hero-terminal {
+  background: color-mix(in srgb, var(--card) 91%, transparent);
+  backdrop-filter: blur(8px);
+}
+.splash-cursor-layer {
+  opacity: 0.58;
+  mix-blend-mode: normal;
+}
+
+@media (max-width: 1023px) {
+  .hero-atmosphere {
+    inset: 0 -24px;
+  }
+  .hero-identity {
+    font-size: clamp(76px, 12.1vw, 128px);
+  }
+  .hero-perl-mark-1,
+  .hero-perl-mark-3 {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    min-height: auto;
+  }
+  .hero-atmosphere {
+    inset-inline: -20px;
+  }
+  .hero-metal-scrim {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--background) 24%, transparent),
+      color-mix(in srgb, var(--background) 62%, transparent)
+    );
+  }
+  .hero-identity {
+    font-size: clamp(88px, 20.7vw, 158px);
+  }
+  .hero-perl-mark {
+    opacity: 0.12;
+    animation-duration: 34s;
+  }
+  .hero-perl-mark-0 {
+    top: 22%;
+    right: 4%;
+  }
+  .hero-perl-mark-2 {
+    bottom: 38%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-perl-mark {
+    animation: none !important;
+  }
+  .splash-cursor-layer {
+    display: none;
+  }
+}
 @media (forced-colors: active) {
   .custom-cursor {
     display: none;
@@ -2281,4 +2452,9 @@ h2,
   .member-border-trace {
     transition: none;
   }
+}
+
+/* Keep the metallic field present at the top, then dissolve it into About. */
+.hero-atmosphere {
+  mask-image: linear-gradient(to bottom, #000 0%, #000 87%, transparent 100%);
 }

@@ -1,144 +1,64 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useScroll,
-  useTransform,
-  useReducedMotion,
-} from "motion/react";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
+import { useReducedMotion } from "motion/react";
+import MoltenMetal from "@/components/MoltenMetal";
 import { PixelCamel } from "./PixelCamel";
 
+const fragments = [".pl", "$_", "{}", "::"];
+
 export function HeroAtmosphere() {
-  const root = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(-500);
-  const y = useMotionValue(-500);
-  const smoothX = useSpring(x, { stiffness: 85, damping: 25 });
-  const smoothY = useSpring(y, { stiffness: 85, damping: 25 });
-  const reactX = useMotionValue(0);
-  const reactY = useMotionValue(0);
-  const decorX = useSpring(reactX, { stiffness: 55, damping: 22 });
-  const decorY = useSpring(reactY, { stiffness: 55, damping: 22 });
+  const { resolvedTheme } = useTheme();
   const reduced = useReducedMotion();
-  const [inView, setInView] = useState(true);
-  const { scrollY } = useScroll();
-  const depth = useTransform(scrollY, [0, 900], [0, -26]);
+  const [compact, setCompact] = useState(false);
 
   useEffect(() => {
-    const hero = root.current?.closest("section");
-    if (!hero) return;
-    const media = matchMedia(
-      "(min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
-    );
-    const hide = () => root.current?.removeAttribute("data-spotlight");
-    const move = (event: PointerEvent) => {
-      if (!media.matches || event.pointerType !== "mouse") {
-        hide();
-        return;
-      }
-      const bounds = hero.getBoundingClientRect();
-      x.set(event.clientX - bounds.left);
-      y.set(event.clientY - bounds.top);
-      reactX.set(((event.clientX - bounds.left) / bounds.width - 0.5) * 14);
-      reactY.set(((event.clientY - bounds.top) / bounds.height - 0.5) * 10);
-      root.current?.setAttribute("data-spotlight", "");
-    };
-    const observer = new IntersectionObserver(([entry]) =>
-      setInView(entry.isIntersecting),
-    );
-    observer.observe(hero);
-    hero.addEventListener("pointermove", move, { passive: true });
-    hero.addEventListener("pointerleave", hide);
-    media.addEventListener("change", hide);
-    return () => {
-      observer.disconnect();
-      hero.removeEventListener("pointermove", move);
-      hero.removeEventListener("pointerleave", hide);
-      media.removeEventListener("change", hide);
-    };
-  }, [reactX, reactY, x, y]);
+    const media = matchMedia("(max-width: 767px)");
+    const update = () => setCompact(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  const dark = resolvedTheme === "dark";
 
   return (
-    <div
-      ref={root}
-      className="hero-atmosphere"
-      aria-hidden="true"
-      data-paused={!inView}
-    >
-      <motion.div className="hero-depth" style={{ y: reduced ? 0 : depth }}>
-        <div className="ambient-grid" />
-        <div className="ambient-shape ambient-blue" />
-        <div className="ambient-shape ambient-purple" />
-        <motion.div className="code-fragments" style={{ x: decorX, y: decorY }}>
-          {["{ }", "::", ".pm", "</>", "$", "[]"].map((text, index) => (
-            <span className={`fragment fragment-${index}`} key={text}>
-              {text}
-            </span>
-          ))}
-        </motion.div>
-        <svg
-          className="digital-landscape"
-          viewBox="0 0 1200 260"
-          preserveAspectRatio="none"
-        >
-          <path
-            className="landscape-horizon"
-            d="M0 190H150v-15h120v12h155v-36h95v21h160v-49h100v34h150v-18h120v51h150"
-          />
-          <path
-            className="landscape-step"
-            d="M0 231h185v-10h110v-14h160v9h92v-20h145v13h118v-31h170v17h220"
-          />
-          {[70, 270, 520, 780, 980, 1130].map((cx, index) => (
-            <circle
-              key={cx}
-              cx={cx}
-              cy={[190, 187, 172, 157, 139, 190][index]}
-              r="3"
-            />
-          ))}
-        </svg>
-        <motion.div
-          className="perl-constellation"
-          style={{ x: decorX, y: decorY }}
-        >
-          <svg viewBox="0 0 360 230">
-            <path d="M25 165L95 90L165 126L225 42L320 82M95 90L120 195L265 178L320 82M165 126L265 178" />
-            <circle className="perl-signal" r="3" />
-          </svg>
-          {[
-            [".pl", 7, 68],
-            [".pm", 25, 32],
-            ["$_", 45, 48],
-            ["::", 63, 12],
-            ["@", 88, 29],
-            ["%", 72, 76],
-            ["PERL", 31, 84],
-          ].map(([label, left, top], index) => (
-            <span
-              key={String(label)}
-              className={`constellation-node node-${index}`}
-              style={{ left: `${left}%`, top: `${top}%` }}
-            >
-              <i />
-              {label}
-            </span>
-          ))}
-        </motion.div>
-        <div className="hero-camel-route">
-          <PixelCamel
-            className="hero-camel"
-            walking
-            label="Distant pixel camel"
-          />
-        </div>
-      </motion.div>
-      <motion.div
-        className="hero-spotlight"
-        style={{ x: smoothX, y: smoothY }}
+    <div className="hero-atmosphere" aria-hidden="true">
+      <MoltenMetal
+        className="hero-molten"
+        color1={dark ? "#05070d" : "#d8dce7"}
+        color2={dark ? "#2448c7" : "#4969dc"}
+        color3={dark ? "#eef3ff" : "#ffffff"}
+        backgroundColor={dark ? "#11131a" : "#f2f1ed"}
+        lightMode={!dark}
+        speed={reduced ? 0 : compact ? 0.12 : 0.2}
+        scale={compact ? 3.2 : 3.8}
+        detail={compact ? 2 : 3}
+        glow={compact ? 1.05 : 1.3}
+        coreSize={0.075}
+        swirl={0.78}
+        fold={-0.16}
+        blackPoint={dark ? 0.1 : 0.07}
+        brightness={dark ? 1.08 : 0.92}
+        grain={!compact}
+        grainIntensity={0.025}
+        mouseInteraction={false}
+        opacity={dark ? 0.82 : 0.72}
+        maxDpr={compact ? 1 : 1.5}
+        motionEnabled={!reduced}
       />
+      <div className="hero-metal-scrim" />
+      <div className="hero-perl-marks">
+        {fragments.map((fragment, index) => (
+          <span className={`hero-perl-mark hero-perl-mark-${index}`} key={fragment}>
+            {fragment}
+          </span>
+        ))}
+      </div>
+      <div className="hero-camel-route">
+        <PixelCamel className="hero-camel" walking={!reduced} label="Distant pixel camel" />
+      </div>
     </div>
   );
 }

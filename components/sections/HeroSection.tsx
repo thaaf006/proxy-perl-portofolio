@@ -6,6 +6,7 @@ import { HeroEntrance } from "@/components/shared/HeroEntrance";
 import { HeroTerminal } from "@/components/shared/HeroTerminal";
 import { HeroAtmosphere } from "@/components/shared/HeroAtmosphere";
 import { TechnicalTicker } from "@/components/shared/TechnicalTicker";
+import { HeroIdentity } from "@/components/shared/HeroIdentity";
 
 export function HeroSection() {
   return (
@@ -23,21 +24,9 @@ export function HeroSection() {
                 WE ARE
               </span>
             </span>
-            {group.name.split(" ").map((word, index, words) => (
-              <span className="hero-mask" key={`${word}-${index}`}>
-                <span
-                  className={`hero-word ${index === words.length - 1 ? "hero-word-last" : ""}`}
-                  data-enter="line"
-                >
-                  {word}
-                  {index === words.length - 1 && (
-                    <span className="code-caret" aria-hidden="true">
-                      _
-                    </span>
-                  )}
-                </span>
-              </span>
-            ))}
+            <span className="hero-mask" data-enter="line">
+              <HeroIdentity />
+            </span>
           </h1>
         </div>
         <div className="hero-aside">

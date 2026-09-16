@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/shared/Reveal";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
@@ -15,15 +14,9 @@ export default function Home() {
       <Navbar />
       <main id="main">
         <HeroSection />
-        <Reveal>
-          <AboutSection />
-        </Reveal>
-        <Reveal>
-          <MembersSection />
-        </Reveal>
-        <Reveal>
-          <GallerySection />
-        </Reveal>
+        <AboutSection />
+        <MembersSection />
+        <GallerySection />
       </main>
       <Footer />
     </>

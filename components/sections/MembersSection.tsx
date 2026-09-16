@@ -5,9 +5,9 @@ export function MembersSection() {
   return (
     <section id="members" className="container section">
       <SectionHeading
-        number="02"
-        label="The people"
-        title="Meet our twelve."
+        number="03"
+        label="Members"
+        title="meet_the_team()"
         description="Different personalities, a shared chapter. Select a person to get to know them a little better."
       />
       <div className="members-grid">

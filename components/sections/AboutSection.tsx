@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/shared/Reveal";
 import { group } from "@/data/group";
 import { members } from "@/data/members";
 export function AboutSection() {
@@ -11,14 +12,16 @@ export function AboutSection() {
     <section id="about" className="about-section section">
       <div className="container">
         <p className="eyebrow">
-          <span>01 /</span> A little about us
+          <span>02 /</span> About / the human side
         </p>
         <div className="about-grid">
-          <h2>{group.aboutTitle}</h2>
-          <div className="about-copy">
+          <Reveal>
+            <h2>{group.aboutTitle}</h2>
+          </Reveal>
+          <Reveal className="about-copy" delay={0.1}>
             <p>{group.about}</p>
             <p>{group.aboutNote}</p>
-          </div>
+          </Reveal>
         </div>
         <dl className="stats">
           {stats.map(([value, label]) => (

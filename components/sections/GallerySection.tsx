@@ -5,8 +5,8 @@ export function GallerySection() {
     <section id="gallery" className="section gallery-section">
       <div className="container">
         <SectionHeading
-          number="03"
-          label="Our visual journal"
+          number="04"
+          label="Gallery / shared memory"
           title="The in-between moments."
           description="A place for the days, details, and shared memories that make this chapter ours."
         />

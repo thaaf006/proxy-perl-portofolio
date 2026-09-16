@@ -4,7 +4,7 @@ import { Menu, X, ArrowUpRight } from "lucide-react";
 import { Dialog } from "@base-ui/react/dialog";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { group } from "@/data/group";
-const links = ["Home", "About", "Members", "Gallery"];
+const links = ["About", "Members", "Gallery"];
 export function Navbar() {
   const [open, setOpen] = useState(false);
   return (
@@ -12,14 +12,14 @@ export function Navbar() {
       <div className="container nav-inner">
         <a className="brand" href="#home" aria-label={`${group.name} home`}>
           <span className="brand-symbol" aria-hidden="true">
-            g.
+            [p]
           </span>
-          {group.name}
-          <span className="brand-period">/</span>
+          {group.name.replace(" ", " / ")}
         </a>
         <nav className="desktop-nav" aria-label="Main navigation">
-          {links.map((link) => (
+          {links.map((link, index) => (
             <a key={link} href={`#${link.toLowerCase()}`}>
+              <span className="nav-index">0{index + 2}</span>
               {link}
             </a>
           ))}
@@ -52,7 +52,7 @@ export function Navbar() {
                       href={`#${link.toLowerCase()}`}
                       onClick={() => setOpen(false)}
                     >
-                      <span className="eyebrow">0{index + 1}</span>
+                      <span className="eyebrow">0{index + 2}</span>
                       {link}
                       <ArrowUpRight size={23} />
                     </a>

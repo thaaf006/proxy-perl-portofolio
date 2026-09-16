@@ -42,7 +42,7 @@ export function MemberDetail({
       <Dialog.Backdrop className="dialog-backdrop" />
       <Dialog.Popup className="profile-dialog">
         <div className="dialog-toolbar">
-          <span className="eyebrow">The people / {number}</span>
+          <span className="eyebrow">Profile / {number}</span>
           <Dialog.Close className="icon-button" aria-label="Close profile">
             <X size={21} />
           </Dialog.Close>
@@ -71,7 +71,10 @@ export function MemberDetail({
               ].map(([label, value]) =>
                 value ? (
                   <div key={label}>
-                    <dt>{label}</dt>
+                    <dt>
+                      <span aria-hidden="true">&gt; </span>
+                      {label}
+                    </dt>
                     <dd>{value}</dd>
                   </div>
                 ) : null,

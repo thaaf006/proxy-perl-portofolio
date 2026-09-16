@@ -5,10 +5,10 @@ export function GallerySection() {
     <section id="gallery" className="section gallery-section">
       <div className="container">
         <SectionHeading
-          number="03"
-          label="Our visual journal"
+          number="04"
+          label="Shared memories"
           title="The in-between moments."
-          description="A place for the days, details, and shared memories that make this chapter ours."
+          description="The moments we chose to keep."
         />
         <GalleryGrid />
       </div>

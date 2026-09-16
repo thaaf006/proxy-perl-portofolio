@@ -1,5 +1,6 @@
 "use client";
 import { motion, useReducedMotion } from "motion/react";
+import { easeOut, revealDuration } from "@/lib/motion";
 
 export function Reveal({
   children,
@@ -15,12 +16,15 @@ export function Reveal({
     <motion.div
       className={className}
       initial={false}
-      whileInView={{ opacity: [0.7, 1], y: reduced ? 0 : [14, 0] }}
+      whileInView={{
+        opacity: reduced ? 1 : [0.35, 1],
+        y: reduced ? 0 : [24, 0],
+      }}
       viewport={{ once: true, amount: 0.08 }}
       transition={{
-        duration: reduced ? 0 : 0.45,
+        duration: reduced ? 0 : revealDuration,
         delay: reduced ? 0 : delay,
-        ease: "easeOut",
+        ease: easeOut,
       }}
     >
       {children}

@@ -2,6 +2,9 @@
 
 import { ThemeProvider } from "next-themes";
 import { MotionConfig } from "motion/react";
+import { ScrollProgress } from "./ScrollProgress";
+import { LandingIntro } from "./LandingIntro";
+import { SplashCursorLayer } from "./SplashCursorLayer";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -11,7 +14,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem={false}
       disableTransitionOnChange
     >
-      <MotionConfig reducedMotion="user">{children}</MotionConfig>
+      <MotionConfig reducedMotion="user">
+        <LandingIntro>
+          <ScrollProgress />
+          {children}
+          <SplashCursorLayer />
+        </LandingIntro>
+      </MotionConfig>
     </ThemeProvider>
   );
 }

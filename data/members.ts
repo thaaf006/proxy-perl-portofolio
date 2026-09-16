@@ -27,6 +27,7 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
   {
     id: "member-02",
@@ -37,6 +38,7 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
   {
     id: "member-03",
@@ -47,6 +49,7 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
   {
     id: "member-04",
@@ -57,6 +60,7 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
   {
     id: "member-05",
@@ -67,6 +71,7 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
   {
     id: "member-06",
@@ -77,6 +82,7 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
   {
     id: "member-07",
@@ -87,6 +93,7 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
   {
     id: "member-08",
@@ -97,6 +104,7 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
   {
     id: "member-09",
@@ -107,6 +115,7 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
   {
     id: "member-10",
@@ -117,6 +126,7 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
   {
     id: "member-11",
@@ -127,6 +137,7 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
   {
     id: "member-12",
@@ -137,5 +148,6 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
+    image: "/members/member-01.jpg"
   },
 ];

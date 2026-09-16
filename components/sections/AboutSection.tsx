@@ -1,36 +1,56 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { Reveal } from "@/components/shared/Reveal";
+import { AnimatedStat } from "@/components/shared/AnimatedStat";
 import { group } from "@/data/group";
 import { members } from "@/data/members";
+
 export function AboutSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const signatureY = useTransform(scrollYProgress, [0, 1], reduced ? [0, 0] : [-6, 8]);
   const stats = [
+    [members.filter((member) => member.role === "Leader").length, "Leader"],
+    [members.filter((member) => member.role === "PJK").length, "PJK"],
+    [members.filter((member) => member.role === "Member").length, "Members"],
     [members.length, "People"],
-    [members.filter((m) => m.role === "Leader").length, "Leader"],
-    [members.filter((m) => m.role === "PJK").length, "PJK"],
-    [members.filter((m) => m.role === "Member").length, "Members"],
-  ];
+  ] as const;
+
   return (
-    <section id="about" className="about-section section">
-      <div className="container">
-        <p className="eyebrow">
-          <span>01 /</span> A little about us
-        </p>
-        <div className="about-grid">
-          <h2>{group.aboutTitle}</h2>
-          <div className="about-copy">
+    <section ref={sectionRef} id="about" className="about-section section">
+      <motion.span className="about-signature" style={{ y: signatureY }} aria-hidden="true">[p]</motion.span>
+      <div className="container about-editorial">
+        <p className="eyebrow"><span>02 /</span> About</p>
+        <div className="about-manifesto">
+          <Reveal className="about-manifesto-heading">
+            <span className="technical-label">Group manifesto</span>
+            <h2>12 PEOPLE,<br />ONE PROXY.</h2>
+          </Reveal>
+          <Reveal className="about-copy" delay={0.08}>
             <p>{group.about}</p>
             <p>{group.aboutNote}</p>
-          </div>
+          </Reveal>
         </div>
-        <dl className="stats">
+        <motion.div
+          className="about-rule"
+          initial={reduced ? false : { scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: reduced ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] }}
+        />
+        <div className="about-numbers-label technical-label">By the numbers</div>
+        <dl className="about-numbers">
           {stats.map(([value, label]) => (
             <div key={label}>
+              <dd><AnimatedStat value={value} /></dd>
               <dt>{label}</dt>
-              <dd>
-                {String(value).padStart(2, "0")}
-                <span>.</span>
-              </dd>
             </div>
           ))}
         </dl>
+        <p className="about-tagline">{group.tagline}</p>
       </div>
     </section>
   );

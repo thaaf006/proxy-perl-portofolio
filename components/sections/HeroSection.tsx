@@ -1,65 +1,67 @@
-import { ArrowDownRight, ArrowUpRight, Asterisk } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { group } from "@/data/group";
 import { Photo } from "@/components/shared/Photo";
-import { Reveal } from "@/components/shared/Reveal";
+import { HeroEntrance } from "@/components/shared/HeroEntrance";
+import { HeroAtmosphere } from "@/components/shared/HeroAtmosphere";
+import { HeroIdentity } from "@/components/shared/HeroIdentity";
+
 export function HeroSection() {
   return (
-    <section id="home" className="container hero">
-      <Reveal className="hero-copy">
-        <p className="eyebrow">
-          <span className="status-dot" />
-          {group.university}
-        </p>
-        <h1>
-          {group.name}
-          <span className="hero-slash">/</span>
-          <span>{group.tagline}</span>
-        </h1>
-        <p className="hero-description">{group.description}</p>
-        <a className="primary-link" href="#members">
-          Meet The Team <ArrowUpRight size={18} />
-        </a>
-        <div className="hero-footnote">
-          <span className="tiny-stack" aria-hidden="true">
-            <i>01</i>
-            <i>02</i>
-            <i>12</i>
-          </span>
+    <section id="home" className="hero">
+      <HeroAtmosphere />
+      <div className="container hero-content">
+        <HeroEntrance>
+          <div className="hero-heading">
+            <p className="eyebrow" data-enter>
+              <span>01 /</span> {group.name}
+            </p>
+            <h1 aria-label={`We are ${group.name}`}>
+              <span className="hero-mask">
+                <span className="hero-kicker" data-enter="line">
+                  WE ARE
+                </span>
+              </span>
+              <span className="hero-mask hero-identity-mask" data-enter="line">
+                <HeroIdentity />
+              </span>
+            </h1>
+          </div>
+          <div className="hero-aside">
+            <div className="hero-intro" data-enter>
+              <span className="technical-label">{"// MORE THAN A LANGUAGE"}</span>
+              <p className="hero-statement">Not just a programming language.</p>
+              <p className="hero-description">
+                Twelve people, different stories,
+                <br />
+                one group to call ours.
+              </p>
+            </div>
+            <div data-enter>
+              <a className="primary-link" href="#members">
+                <span>MEET THE MEMBERS</span>
+                <ArrowDownRight size={18} />
+              </a>
+            </div>
+          </div>
+        </HeroEntrance>
+        {group.heroImage && (
+          <Photo
+            src={group.heroImage}
+            alt={`${group.name} together`}
+            label="12"
+            className="hero-group-photo"
+            sizes="100vw"
+          />
+        )}
+        <div className="hero-bottom">
+          <span>12 PEOPLE</span>
+          <a href="#about">
+            SCROLL <ArrowDownRight size={15} />
+          </a>
           <span>
-            12 individuals.
-            <br />
-            One collective.
+            {group.university} <ArrowUpRight size={13} />
           </span>
         </div>
-      </Reveal>
-      <Reveal className="hero-art" delay={0.12}>
-        <div className="art-topline">
-          <span>A collective in the making</span>
-          <Asterisk size={23} />
-        </div>
-        <Photo
-          src={group.heroImage}
-          alt="Group photograph placeholder"
-          label="12"
-          className="hero-photo"
-          sizes="(max-width: 768px) 100vw, 50vw"
-        />
-        <div className="art-caption">
-          <span>Fig. 01 — All of us, together</span>
-          <ArrowDownRight size={22} />
-        </div>
-        <div className="art-sticker">
-          Many minds.
-          <br />
-          <em>Shared moments.</em>
-        </div>
-      </Reveal>
-      <div className="hero-bottom">
-        <span>People first. Always.</span>
-        <a href="#about">
-          Get to know us <ArrowDownRight size={16} />
-        </a>
-        <span>01 — 04</span>
       </div>
     </section>
   );

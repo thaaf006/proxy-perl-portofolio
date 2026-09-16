@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/shared/Reveal";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
@@ -6,5 +7,25 @@ import { MembersSection } from "@/components/sections/MembersSection";
 import { GallerySection } from "@/components/sections/GallerySection";
 
 export default function Home() {
-  return <><a className="skip-link" href="#main">Skip to content</a><Navbar /><main id="main"><HeroSection /><AboutSection /><MembersSection /><GallerySection /></main><Footer /></>;
+  return (
+    <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <Navbar />
+      <main id="main">
+        <HeroSection />
+        <Reveal>
+          <AboutSection />
+        </Reveal>
+        <Reveal>
+          <MembersSection />
+        </Reveal>
+        <Reveal>
+          <GallerySection />
+        </Reveal>
+      </main>
+      <Footer />
+    </>
+  );
 }

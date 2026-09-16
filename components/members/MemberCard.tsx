@@ -37,12 +37,7 @@ export function MemberCard({
             <span aria-hidden="true">↗</span>
           </span>
           <div className="member-media">
-            <motion.div
-              initial={reduced ? false : { clipPath: "inset(0 0 100% 0)" }}
-              whileInView={{ clipPath: "inset(0 0 0% 0)" }}
-              viewport={{ once: true, amount: 0.16 }}
-              transition={{ duration: reduced ? 0 : 0.6, ease: easeOut }}
-            >
+            <div className="member-image-frame">
               <motion.div
                 variants={{
                   rest: { scale: 1 },
@@ -55,9 +50,10 @@ export function MemberCard({
                   alt={`Portrait of ${member.name}`}
                   label={number}
                   className="member-photo"
+                  sizes="(max-width: 767px) 50vw, (max-width: 1199px) 33vw, 25vw"
                 />
               </motion.div>
-            </motion.div>
+            </div>
             <motion.span
               className="member-view"
               variants={{

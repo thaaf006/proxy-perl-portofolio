@@ -33,7 +33,7 @@ export function MemberCard({
         >
           <span className="member-border-trace" aria-hidden="true" />
           <span className="member-index">
-            <span>INDEX / {number}</span>
+            <span>{number}</span>
             <span aria-hidden="true">↗</span>
           </span>
           <div className="member-media">
@@ -66,7 +66,7 @@ export function MemberCard({
               }}
               transition={{ duration: reduced ? 0 : 0.25 }}
             >
-              &lt; view_profile /&gt;
+              VIEW
             </motion.span>
           </div>
           <div className="member-info">

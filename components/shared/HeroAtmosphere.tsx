@@ -6,7 +6,7 @@ import { useReducedMotion } from "motion/react";
 import MoltenMetal from "@/components/MoltenMetal";
 import { PixelCamel } from "./PixelCamel";
 
-const fragments = [".pl", "$_", "{}", "::"];
+const fragments = [".pl", "$_"];
 
 export function HeroAtmosphere() {
   const { resolvedTheme } = useTheme();
@@ -33,18 +33,18 @@ export function HeroAtmosphere() {
         backgroundColor={dark ? "#11131a" : "#f2f1ed"}
         lightMode={!dark}
         speed={reduced ? 0 : compact ? 0.12 : 0.2}
-        scale={compact ? 3.2 : 3.8}
-        detail={compact ? 2 : 3}
-        glow={compact ? 1.05 : 1.3}
-        coreSize={0.075}
+        scale={compact ? 4.2 : 4.8}
+        detail={compact ? 3 : 4}
+        glow={dark ? (compact ? 1.5 : 1.72) : compact ? 1.08 : 1.2}
+        coreSize={dark ? 0.11 : 0.075}
         swirl={0.78}
-        fold={-0.16}
-        blackPoint={dark ? 0.1 : 0.07}
-        brightness={dark ? 1.08 : 0.92}
+        fold={-0.19}
+        blackPoint={dark ? 0.03 : 0.055}
+        brightness={dark ? 1.24 : 0.98}
         grain={!compact}
         grainIntensity={0.025}
         mouseInteraction={false}
-        opacity={dark ? 0.82 : 0.72}
+        opacity={dark ? 0.9 : 0.72}
         maxDpr={compact ? 1 : 1.5}
         motionEnabled={!reduced}
       />

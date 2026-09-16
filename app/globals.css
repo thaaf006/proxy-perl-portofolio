@@ -2455,6 +2455,318 @@ h2,
 }
 
 /* Keep the metallic field present at the top, then dissolve it into About. */
+.hero {
+  overflow: hidden;
+  overflow: clip;
+}
 .hero-atmosphere {
+  inset: 0;
+  width: 100%;
+  height: 100%;
   mask-image: linear-gradient(to bottom, #000 0%, #000 87%, transparent 100%);
+}
+.hero-molten,
+.hero-molten canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* Editorial cleanup: let people, photographs, and the full-bleed Hero lead. */
+.hero {
+  width: 100%;
+  min-height: calc(100svh - 80px);
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100svh - 80px);
+  padding-top: clamp(42px, 7vh, 72px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hero-stage {
+  flex: 1;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.75fr);
+  gap: clamp(44px, 7vw, 96px);
+  align-items: center;
+}
+.hero-aside {
+  padding: 42px 0 0;
+  align-self: center;
+}
+.hero-aside::before,
+.hero-edition {
+  display: none;
+}
+.hero-identity {
+  font-size: clamp(4.5rem, 7.5vw, 8rem);
+  line-height: 0.88;
+  letter-spacing: -0.075em;
+}
+.hero-identity-static,
+.hero-identity-shuffle {
+  background: none;
+  color: var(--foreground);
+}
+.hero-kicker {
+  font-size: clamp(1.4rem, 2.4vw, 2.35rem);
+  margin-bottom: 16px;
+}
+.hero-statement {
+  max-width: 420px;
+  font-size: clamp(1.55rem, 2.2vw, 2.25rem);
+  line-height: 1.15;
+  margin-top: 18px;
+}
+.hero-description {
+  max-width: 340px;
+  font-size: clamp(0.88rem, 1.1vw, 1rem);
+  line-height: 1.6;
+  color: var(--foreground);
+  opacity: 0.76;
+  margin-top: 22px;
+}
+.primary-link {
+  position: relative;
+  gap: 28px;
+  min-height: 44px;
+  margin-top: 30px;
+  padding: 9px 0;
+  color: var(--foreground);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--foreground);
+}
+.primary-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -1px;
+  height: 2px;
+  background: var(--primary);
+  transition: right 0.35s ease;
+}
+.primary-link:hover,
+.primary-link:focus-visible {
+  color: var(--primary);
+}
+.primary-link:hover::after,
+.primary-link:focus-visible::after {
+  right: 0;
+}
+.primary-link:hover svg,
+.primary-link:focus-visible svg {
+  transform: translate(4px, 4px);
+}
+.hero-bottom {
+  margin-top: 40px;
+  padding-block: 18px 22px;
+  min-height: 63px;
+}
+.hero-bottom > span:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-atmosphere {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 92%, transparent 100%);
+}
+.hero-metal-scrim {
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--background) 26%, transparent), transparent 48%),
+    linear-gradient(to bottom, transparent 65%, color-mix(in srgb, var(--background) 48%, transparent));
+}
+.hero-perl-mark {
+  opacity: 0.1;
+  font-size: clamp(12px, 1.1vw, 16px);
+}
+.hero-perl-mark-0 {
+  top: 16%;
+  right: 7%;
+}
+.hero-perl-mark-1 {
+  top: auto;
+  left: 56%;
+  bottom: 17%;
+}
+
+.about-section {
+  background: var(--card);
+  background-image: none;
+}
+.about-section::before,
+.about-section::after,
+.stats::before {
+  display: none;
+}
+.about-grid {
+  gap: clamp(48px, 9vw, 120px);
+}
+.stats {
+  margin-top: 72px;
+}
+
+.members-section {
+  isolation: auto;
+}
+.member-card {
+  margin: 0;
+  padding: 0 0 18px;
+}
+.member-photo,
+.gallery-photo {
+  border: 1px solid var(--border);
+}
+.photo-placeholder {
+  background-color: color-mix(in srgb, var(--muted) 88%, var(--background));
+  background-image: none;
+}
+.placeholder-orbit {
+  display: none;
+}
+.placeholder-number {
+  opacity: 0.12;
+}
+.member-index {
+  margin-bottom: 10px;
+  letter-spacing: 0.08em;
+}
+.member-view {
+  left: 12px;
+  right: auto;
+  bottom: 12px;
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  color: var(--foreground);
+}
+.member-photo .placeholder-caption {
+  bottom: 25px;
+}
+.card-arrow {
+  display: none;
+}
+.role-label::before {
+  content: none;
+}
+.member-info h3 {
+  text-transform: none;
+}
+
+.gallery-section {
+  background: var(--card);
+  background-image: none;
+  animation: none;
+}
+.gallery-index {
+  color: var(--muted-foreground);
+  letter-spacing: 0.08em;
+}
+.gallery-overlay {
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  color: var(--foreground);
+}
+.gallery-caption small {
+  display: none;
+}
+
+.footer-system {
+  border-top: 1px solid var(--border);
+}
+.footer-signoff {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr auto;
+  align-items: end;
+  gap: 40px;
+  padding-block: 72px 54px;
+}
+.footer-wordmark {
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 620;
+  line-height: 0.92;
+  letter-spacing: -0.075em;
+}
+.footer-signoff p {
+  color: var(--muted-foreground);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.footer-signoff > span {
+  color: var(--primary);
+  font: 12px var(--font-geist-mono), monospace;
+}
+
+@media (max-width: 1023px) {
+  .hero-stage {
+    grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.8fr);
+    gap: 38px;
+  }
+  .hero-identity {
+    font-size: clamp(4.4rem, 9.5vw, 6.5rem);
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    min-height: calc(100svh - 70px);
+  }
+  .hero-content {
+    min-height: calc(100svh - 70px);
+    padding-top: 34px;
+  }
+  .hero-stage {
+    grid-template-columns: 1fr;
+    align-content: start;
+    gap: 34px;
+  }
+  .hero-identity {
+    font-size: clamp(4.2rem, 20vw, 6.2rem);
+  }
+  .hero-aside {
+    padding-top: 0;
+  }
+  .hero-statement {
+    font-size: clamp(1.45rem, 7vw, 1.85rem);
+  }
+  .hero-bottom {
+    margin-top: 32px;
+  }
+  .hero-bottom > span:last-child {
+    display: inline-flex;
+  }
+  .hero-perl-mark-1 {
+    display: none;
+  }
+  .footer-signoff {
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    padding-block: 56px 40px;
+  }
+  .footer-signoff p {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-identity {
+    font-size: clamp(4rem, 19vw, 5.25rem);
+  }
+  .hero-bottom {
+    gap: 12px;
+  }
+  .hero-bottom a {
+    order: 3;
+    flex-basis: 100%;
+  }
 }

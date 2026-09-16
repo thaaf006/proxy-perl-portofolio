@@ -30,7 +30,7 @@ export function GalleryGrid() {
               aria-label={`View ${item.caption || item.alt}`}
             >
               <span className="gallery-index">
-                ARCHIVE_{String(index + 1).padStart(3, "0")} / MEMORY
+                {String(index + 1).padStart(3, "0")}
               </span>
               <div className="gallery-media">
                 <motion.div
@@ -61,12 +61,11 @@ export function GalleryGrid() {
                   transition={{ duration: reduced ? 0 : 0.3 }}
                   aria-hidden="true"
                 >
-                  OPEN MEMORY <ArrowUpRight size={18} />
+                  VIEW <ArrowUpRight size={18} />
                 </motion.span>
               </div>
               <div className="gallery-caption">
                 <span>
-                  <small>[{String(index + 1).padStart(2, "0")}]</small>
                   {item.caption}
                 </span>
                 <ArrowUpRight size={19} />

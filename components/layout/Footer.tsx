@@ -12,18 +12,16 @@ export function Footer() {
   const reduced = useReducedMotion();
   return (
     <footer ref={ref} className="footer-system">
-      <div className="container footer-terminal">
-        <span className="eyebrow">
-          <span>05 /</span> EOF / end of program
-        </span>
-        <div className="footer-command">
-          <span>$</span> end proxy_perl.pl
-        </div>
-        <div className="footer-output">
-          <span>&gt; 12 profiles loaded</span>
-          <span>&gt; one shared story</span>
-          <span>&gt; session complete_</span>
-        </div>
+      <div className="container footer-signoff">
+        <a className="footer-wordmark" href="#home">
+          PROXY / PERL
+        </a>
+        <p>
+          12 people.
+          <br />
+          One shared story.
+        </p>
+        <span>EOF_</span>
       </div>
       <div className="footer-camel-track" aria-hidden="true">
         <motion.div
@@ -44,7 +42,6 @@ export function Footer() {
             {group.name}
             <span className="brand-period">/</span>
           </a>
-          <p>Twelve people. A story still unfolding.</p>
         </div>
         <span>
           © {new Date().getFullYear()} {group.name}

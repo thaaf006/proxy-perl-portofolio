@@ -13,7 +13,7 @@ export function AboutSection() {
     <section id="about" className="about-section section">
       <div className="container">
         <p className="eyebrow">
-          <span>02 /</span> Group data / the human side
+          <span>02 /</span> About the group
         </p>
         <div className="about-grid">
           <Reveal>
@@ -24,12 +24,6 @@ export function AboutSection() {
             <p>{group.aboutNote}</p>
           </Reveal>
         </div>
-        <Reveal className="about-code" delay={0.16}>
-          <span>const proxyPerl = &#123;</span>
-          <span>&nbsp;&nbsp;leader: 1, &nbsp;pjk: 1, &nbsp;members: 10,</span>
-          <span>&nbsp;&nbsp;total: 12, &nbsp;story: &quot;one&quot;</span>
-          <span>&#125;;</span>
-        </Reveal>
         <dl className="stats">
           {stats.map(([value, label]) => (
             <div key={label}>

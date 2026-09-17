@@ -29,7 +29,12 @@ export const members: Member[] = [
     birthday: "DD Month YYYY",
     hobbies: ["Hobby 1", "Hobby 2"],
     funFact: "Fun fact goes here",
-    image: "/members/member-01.jpg"
+    image: "/members/member-01.jpg",
+    instagram: "https://www.instagram.com/althaaf.be",
+    linkedin: "string",
+    email: "@althaagbintang06@gmail.com",
+    github: "https://github.com/thaaf006",
+    cv: "string",
   },
   {
     id: "member-02",

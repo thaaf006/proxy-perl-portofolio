@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { useReducedMotion } from "motion/react";
-import { CodeXml, Camera, Mail, X } from "lucide-react";
+import { Camera, CodeXml, FileText, Link, Mail, X } from "lucide-react";
 import type { Member } from "@/data/members";
 import ProfileCard from "@/components/ProfileCard";
 function socialUrl(value?: string) {
@@ -17,6 +17,11 @@ function socialUrl(value?: string) {
   } catch {
     return undefined;
   }
+}
+function cvUrl(value?: string) {
+  return value?.startsWith("/cv/") && value.toLowerCase().endsWith(".pdf")
+    ? value
+    : undefined;
 }
 export function MemberDetail({
   member,
@@ -34,9 +39,10 @@ export function MemberDetail({
     query.addEventListener("change", sync);
     return () => query.removeEventListener("change", sync);
   }, []);
-  const socials = [
-    { label: "Instagram", href: socialUrl(member.instagram), icon: Camera },
-    { label: "GitHub", href: socialUrl(member.github), icon: CodeXml },
+  const profileActions = [
+    { label: "Instagram", href: socialUrl(member.instagram), icon: Camera, external: true },
+    { label: "LinkedIn", href: socialUrl(member.linkedin), icon: Link, external: true },
+    { label: "GitHub", href: socialUrl(member.github), icon: CodeXml, external: true },
     {
       label: "Email",
       href:
@@ -46,8 +52,11 @@ export function MemberDetail({
           ? `mailto:${member.email}`
           : undefined,
       icon: Mail,
+      external: false,
     },
-  ].filter((link) => link.href);
+    { label: "View CV", href: cvUrl(member.cv), icon: FileText, external: true },
+  ];
+  const hasProfileActions = profileActions.some((action) => action.href);
   return (
     <Dialog.Portal>
       <Dialog.Backdrop className="dialog-backdrop" />
@@ -99,19 +108,29 @@ export function MemberDetail({
                 ) : null,
               )}
             </dl>
-            {socials.length > 0 && (
-              <div className="social-links">
-                {socials.map(({ label, href, icon: Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target={label === "Email" ? undefined : "_blank"}
-                    rel={label === "Email" ? undefined : "noopener noreferrer"}
-                  >
-                    <Icon size={17} />
-                    {label}
-                  </a>
-                ))}
+            {hasProfileActions && (
+              <div className="profile-actions" aria-label={`${member.name} links`}>
+                {profileActions.map(({ label, href, icon: Icon, external }) =>
+                  href ? (
+                    <a
+                      key={label}
+                      href={href}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
+                      aria-label={
+                        label === "View CV"
+                          ? `View ${member.name}'s CV`
+                          : label === "Email"
+                            ? `Email ${member.name}`
+                            : `Open ${member.name}'s ${label}`
+                      }
+                    >
+                      <Icon size={16} aria-hidden="true" />
+                      <span>{label}</span>
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  ) : null,
+                )}
               </div>
             )}
           </div>

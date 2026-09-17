@@ -31,7 +31,7 @@ export function Footer() {
         >
           <PixelCamel
             className="footer-camel"
-            walking={inView && !reduced}
+            state={inView && !reduced ? "run" : "idle"}
             label=""
           />
         </motion.div>

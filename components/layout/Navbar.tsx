@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useReducedMotion } from "motion/react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { Dialog } from "@base-ui/react/dialog";
-import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { group } from "@/data/group";
 import GooeyNav from "@/components/GooeyNav";
 const links = ["About", "Members", "Gallery"];
@@ -57,9 +56,7 @@ export function Navbar() {
             reducedMotion={Boolean(reduced)}
           />
         </nav>
-        <div className="nav-actions">
-          <ThemeToggle />
-          <Dialog.Root open={open} onOpenChange={setOpen}>
+        <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger
               className="icon-button mobile-trigger"
               aria-label="Open navigation"
@@ -93,8 +90,7 @@ export function Navbar() {
                 </nav>
               </Dialog.Popup>
             </Dialog.Portal>
-          </Dialog.Root>
-        </div>
+        </Dialog.Root>
       </div>
     </header>
   );

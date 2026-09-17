@@ -4,7 +4,6 @@ import { useCallback, useMemo, useState } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { ArrowUpRight, X } from "lucide-react";
 import { useReducedMotion } from "motion/react";
-import { useTheme } from "next-themes";
 import CircularGallery from "@/components/CircularGallery";
 import { gallery } from "@/data/gallery";
 import { Photo } from "@/components/shared/Photo";
@@ -18,7 +17,6 @@ function archivePlaceholder(index: number) {
 export function GalleryGrid() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const reduced = useReducedMotion();
-  const { resolvedTheme } = useTheme();
   const items = useMemo(
     () => gallery.map((item, index) => ({
       image: item.src || archivePlaceholder(index),
@@ -37,7 +35,7 @@ export function GalleryGrid() {
             items={items}
             bend={reduced ? 0 : 1.15}
             borderRadius={0.008}
-            textColor={resolvedTheme === "dark" ? "#d8d8d2" : "#27292d"}
+            textColor="#d8d8d2"
             font='500 16px "Geist Mono", monospace'
             scrollSpeed={1.55}
             scrollEase={0.075}

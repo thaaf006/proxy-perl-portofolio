@@ -1,8 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
-import { motion } from "motion/react";
+import { animate, motion } from "motion/react";
 import { group } from "@/data/group";
 import { members } from "@/data/members";
 import { easeOut } from "@/lib/motion";
@@ -12,149 +11,115 @@ const ReadyContext = createContext(true);
 const sessionKey = "proxy-perl-intro-seen";
 export const useLandingReady = () => useContext(ReadyContext);
 
+function statusFor(progress: number) {
+  if (progress >= 100) return "READY";
+  if (progress >= 65) return "LOADING MEMORIES";
+  if (progress >= 30) return "LOADING MEMBERS";
+  return "LOADING IDENTITY";
+}
+
 export function LandingIntro({ children }: { children: React.ReactNode }) {
-  const [phase, setPhase] = useState<"checking" | "intro" | "exit" | "ready">(
-    "checking",
-  );
-  const [mobile, setMobile] = useState(false);
+  const [phase, setPhase] = useState<"intro" | "exit" | "ready">("intro");
+  const [progress, setProgress] = useState(0);
+
   useEffect(() => {
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-    const compact = matchMedia("(max-width: 767px)").matches;
-    let seen = false;
-    try {
-      seen = sessionStorage.getItem(sessionKey) === "1";
-    } catch {
-      /* Storage can be unavailable in private contexts. */
+    const skip = document.documentElement.dataset.intro === "skip";
+    if (skip) {
+      const frame = requestAnimationFrame(() => {
+        setPhase("ready");
+        setProgress(100);
+      });
+      return () => cancelAnimationFrame(frame);
     }
-    const skip =
-      seen || reduced.matches || Boolean(location.hash) || window.scrollY > 80;
+
+    const compact = matchMedia("(max-width: 767px)").matches;
+    const duration = compact ? 1.55 : 1.85;
     const timers: ReturnType<typeof setTimeout>[] = [];
-    const remember = () => {
-      try {
-        sessionStorage.setItem(sessionKey, "1");
-      } catch {
-        /* The intro still completes without storage. */
-      }
-    };
+    let finished = false;
+
+    try {
+      sessionStorage.setItem(sessionKey, "1");
+    } catch {
+      /* The intro still completes when storage is unavailable. */
+    }
+
+    const progressAnimation = animate(0, 100, {
+      duration,
+      ease: [0.45, 0, 0.2, 1],
+      onUpdate: (latest) => setProgress(Math.round(latest)),
+    });
+
     const finish = () => {
+      if (finished) return;
+      finished = true;
+      progressAnimation.stop();
       timers.forEach(clearTimeout);
+      setProgress(100);
+      setPhase("ready");
+      document.documentElement.dataset.intro = "skip";
       window.removeEventListener("keydown", finish);
       window.removeEventListener("pointerdown", finish);
-      reduced.removeEventListener("change", finish);
-      remember();
-      setPhase("ready");
     };
-    timers.push(
-      setTimeout(() => {
-        setMobile(compact);
-        if (skip) finish();
-        else setPhase("intro");
-        remember();
-      }, 0),
-    );
-    if (!skip) {
-      timers.push(setTimeout(() => setPhase("exit"), compact ? 1100 : 1550));
-      timers.push(setTimeout(finish, compact ? 1500 : 2000));
-    }
+
+    timers.push(setTimeout(() => setPhase("exit"), duration * 1000 + 160));
+    timers.push(setTimeout(finish, duration * 1000 + 540));
     window.addEventListener("keydown", finish);
     window.addEventListener("pointerdown", finish);
-    reduced.addEventListener("change", finish);
+
     return () => {
+      finished = true;
+      progressAnimation.stop();
       timers.forEach(clearTimeout);
       window.removeEventListener("keydown", finish);
       window.removeEventListener("pointerdown", finish);
-      reduced.removeEventListener("change", finish);
     };
   }, []);
 
-  const visible = phase === "intro" || phase === "exit";
+  const visible = phase !== "ready";
+  const camelOffset = Math.round((progress / 100) * 64);
+
   return (
     <ReadyContext.Provider value={phase === "exit" || phase === "ready"}>
       {children}
-      {visible &&
-        createPortal(
-          <motion.div
-            className="landing-intro"
-            aria-hidden="true"
-            initial={false}
-            animate={{ y: phase === "exit" ? "-100%" : "0%" }}
-            transition={{ duration: mobile ? 0.4 : 0.45, ease: easeOut }}
-          >
-            <div className="intro-frame">
-              <span className="intro-index">BOOT SEQUENCE / 001</span>
-              <div className="intro-brand">
-                {group.name.replace(" ", " / ")}
-              </div>
-              <p className="intro-command">$ initializing proxy_perl...</p>
-              <div className="intro-progress-scene">
-                <motion.div
+      {visible && (
+        <motion.div
+          className="landing-intro"
+          role="status"
+          aria-live="polite"
+          aria-label={`${statusFor(progress)}, ${progress} percent`}
+          initial={false}
+          animate={{ y: phase === "exit" ? "-100%" : "0%" }}
+          transition={{ duration: 0.38, ease: easeOut }}
+        >
+          <div className="intro-frame">
+            <p className="intro-brand">{group.name.replace(" ", " / ")}</p>
+            <div className="intro-status-block">
+              <span>INITIALIZING</span>
+              <strong>{statusFor(progress)}</strong>
+            </div>
+            <div className="intro-progress-scene" aria-hidden="true">
+              <span className="intro-track-label">00</span>
+              <div className="intro-track">
+                <span className="intro-track-fill" style={{ width: `${progress}%` }} />
+                <span
                   className="intro-camel-runner"
-                  initial={{ left: "0%" }}
-                  animate={{ left: ["0%", "35%", "70%", "calc(100% - 44px)"] }}
-                  transition={{
-                    duration: mobile ? 0.8 : 1.15,
-                    times: [0, 0.22, 0.7, 1],
-                    ease: "easeInOut",
-                  }}
+                  style={{ left: `calc(${progress}% - ${camelOffset}px)` }}
                 >
                   <PixelCamel
                     className="intro-camel"
-                    walking={phase === "intro"}
+                    state={progress >= 100 ? "idle" : "run"}
+                    label=""
                   />
-                </motion.div>
+                </span>
               </div>
-              <div className="intro-progress">
-                <motion.span
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: [0, 0.35, 0.7, 1] }}
-                  transition={{
-                    duration: mobile ? 0.8 : 1.15,
-                    times: [0, 0.22, 0.7, 1],
-                    ease: "easeInOut",
-                  }}
-                />
-              </div>
-              <div className="intro-log">
-                {[
-                  `${members.length} profiles detected`,
-                  "gallery mounted",
-                  "interface ready",
-                ].map((line, index) => (
-                  <motion.p
-                    key={line}
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{
-                      delay:
-                        index === 2
-                          ? mobile
-                            ? 0.82
-                            : 1.16
-                          : (mobile ? 0.18 : 0.3) * (index + 1),
-                      duration: 0.2,
-                    }}
-                  >
-                    <span>0{index + 1}</span>
-                    {line}
-                    <span>✓</span>
-                  </motion.p>
-                ))}
-              </div>
-              <motion.p
-                className="intro-welcome"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: mobile ? 0.98 : 1.36, duration: 0.15 }}
-              >
-                &gt; welcome_
-              </motion.p>
+              <span className="intro-track-label">100</span>
             </div>
-            <span className="intro-skip">
-              BRAND INTRO · PRESS ANY KEY OR CLICK TO SKIP
-            </span>
-          </motion.div>,
-          document.body,
-        )}
+            <p className="intro-percent">{String(progress).padStart(2, "0")}%</p>
+            <p className="intro-signoff">{members.length} PEOPLE / ONE PROXY</p>
+          </div>
+          <span className="intro-skip">PRESS ANY KEY OR TAP TO SKIP</span>
+        </motion.div>
+      )}
     </ReadyContext.Provider>
   );
 }

@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { MembersSection } from "@/components/sections/MembersSection";
 import { GallerySection } from "@/components/sections/GallerySection";
+import { CamelRunSection } from "@/components/sections/CamelRunSection";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <AboutSection />
         <MembersSection />
         <GallerySection />
+        <CamelRunSection />
       </main>
       <Footer />
     </>

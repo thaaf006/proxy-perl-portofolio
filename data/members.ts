@@ -11,8 +11,10 @@ export interface Member {
   hobbies?: string[];
   funFact?: string;
   instagram?: string;
+  linkedin?: string;
   email?: string;
   github?: string;
+  cv?: string;
 }
 
 // Add images as image: "/members/member-01.jpg" after placing them in public/members.

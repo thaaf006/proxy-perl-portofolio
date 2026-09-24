@@ -1,10 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Dialog } from "@base-ui/react/dialog";
-import { useReducedMotion } from "motion/react";
 import { Camera, CodeXml, FileText, Link, Mail, X } from "lucide-react";
-import type { Member } from "@/data/members";
-import ProfileCard from "@/components/ProfileCard";
+import { members, type Member } from "@/data/members";
+import { CircularTestimonials } from "@/components/ui/circular-testimonials";
 function socialUrl(value?: string) {
   if (!value) return undefined;
   try {
@@ -26,37 +25,39 @@ function cvUrl(value?: string) {
 export function MemberDetail({
   member,
   number,
+  memberIndex,
 }: {
   member: Member;
   number: string;
+  memberIndex: number;
 }) {
-  const reduced = useReducedMotion();
-  const [finePointer, setFinePointer] = useState(false);
-  useEffect(() => {
-    const query = matchMedia("(hover: hover) and (pointer: fine)");
-    const sync = () => setFinePointer(query.matches);
-    sync();
-    query.addEventListener("change", sync);
-    return () => query.removeEventListener("change", sync);
-  }, []);
+  const [activeIndex, setActiveIndex] = useState(memberIndex);
+  const activeMember = members[activeIndex] ?? member;
   const profileActions = [
-    { label: "Instagram", href: socialUrl(member.instagram), icon: Camera, external: true },
-    { label: "LinkedIn", href: socialUrl(member.linkedin), icon: Link, external: true },
-    { label: "GitHub", href: socialUrl(member.github), icon: CodeXml, external: true },
+    { label: "Instagram", href: socialUrl(activeMember.instagram), icon: Camera, external: true },
+    { label: "LinkedIn", href: socialUrl(activeMember.linkedin), icon: Link, external: true },
+    { label: "GitHub", href: socialUrl(activeMember.github), icon: CodeXml, external: true },
     {
       label: "Email",
       href:
-        member.email &&
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(member.email) &&
-        !member.email.endsWith("example.com")
-          ? `mailto:${member.email}`
+        activeMember.email &&
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(activeMember.email) &&
+        !activeMember.email.endsWith("example.com")
+          ? `mailto:${activeMember.email}`
           : undefined,
       icon: Mail,
       external: false,
     },
-    { label: "View CV", href: cvUrl(member.cv), icon: FileText, external: true },
+    { label: "View CV", href: cvUrl(activeMember.cv), icon: FileText, external: true },
   ];
   const hasProfileActions = profileActions.some((action) => action.href);
+  const testimonials = members.map((profile, index) => ({
+    name: profile.name,
+    designation: `${profile.role} / ${profile.origin ?? "Profile"}`,
+    quote: profile.funFact ?? "A closer look at one of us.",
+    src: profile.image?.startsWith("/") ? profile.image : undefined,
+    fallbackLabel: String(index + 1).padStart(2, "0"),
+  }));
   return (
     <Dialog.Portal>
       <Dialog.Backdrop className="dialog-backdrop" />
@@ -68,34 +69,25 @@ export function MemberDetail({
           </Dialog.Close>
         </div>
         <div className="profile-layout">
-          <ProfileCard
-            className="proxy-profile-card"
-            avatarUrl={member.image || ""}
-            name={member.name}
-            title={member.role}
-            handle={member.nim}
-            status={member.origin}
-            fallbackLabel={number}
-            innerGradient="none"
-            behindGlowEnabled={false}
-            showUserInfo={false}
-            enableTilt={finePointer && !reduced}
-            enableMobileTilt={false}
-            tiltIntensity={0.24}
+          <CircularTestimonials
+            testimonials={testimonials}
+            initialIndex={memberIndex}
+            onActiveIndexChange={setActiveIndex}
           />
           <div className="profile-content">
-            <p className="role-label">{member.role}</p>
-            <Dialog.Title className="profile-title">{member.name}</Dialog.Title>
+            <p className="role-label">{activeMember.role}</p>
+            <Dialog.Title className="profile-title">{activeMember.name}</Dialog.Title>
             <Dialog.Description className="profile-description">
               A closer look at one of us.
             </Dialog.Description>
             <dl className="biodata">
               {[
-                ["NIM", member.nim],
-                ["Origin", member.origin],
-                ["Birthday", member.birthday],
-                ["Hobbies", member.hobbies?.filter(Boolean).join(" · ")],
-                ["Fun fact", member.funFact],
+                ["Nickname", activeMember.nickname],
+                ["NIM", activeMember.nim],
+                ["Origin", activeMember.origin],
+                ["Birthday", activeMember.birthday],
+                ["Hobbies", activeMember.hobbies?.filter(Boolean).join(" · ")],
+                ["Fun fact", activeMember.funFact],
               ].map(([label, value]) =>
                 value ? (
                   <div key={label}>
@@ -109,7 +101,7 @@ export function MemberDetail({
               )}
             </dl>
             {hasProfileActions && (
-              <div className="profile-actions" aria-label={`${member.name} links`}>
+              <div className="profile-actions" aria-label={`${activeMember.name} links`}>
                 {profileActions.map(({ label, href, icon: Icon, external }) =>
                   href ? (
                     <a
@@ -119,10 +111,10 @@ export function MemberDetail({
                       rel={external ? "noopener noreferrer" : undefined}
                       aria-label={
                         label === "View CV"
-                          ? `View ${member.name}'s CV`
+                          ? `View ${activeMember.name}'s CV`
                           : label === "Email"
-                            ? `Email ${member.name}`
-                            : `Open ${member.name}'s ${label}`
+                            ? `Email ${activeMember.name}`
+                            : `Open ${activeMember.name}'s ${label}`
                       }
                     >
                       <Icon size={16} aria-hidden="true" />

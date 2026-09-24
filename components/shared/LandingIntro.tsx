@@ -92,7 +92,7 @@ export function LandingIntro({ children }: { children: React.ReactNode }) {
           transition={{ duration: 0.38, ease: easeOut }}
         >
           <div className="intro-frame">
-            <p className="intro-brand">{group.name.replace(" ", " / ")}</p>
+            <p className="intro-brand">{group.name}</p>
             <div className="intro-status-block">
               <span>INITIALIZING</span>
               <strong>{statusFor(progress)}</strong>

@@ -5,11 +5,13 @@ import SplashCursor from "@/components/SplashCursor";
 
 const desktopPointer =
   "(min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)";
+const SHOW_SMOKY_CURSOR = false;
 
 export function SplashCursorLayer() {
   const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
+    if (!SHOW_SMOKY_CURSOR) return;
     const media = matchMedia(desktopPointer);
     const update = () => setEnabled(media.matches);
     update();
@@ -17,7 +19,7 @@ export function SplashCursorLayer() {
     return () => media.removeEventListener("change", update);
   }, []);
 
-  if (!enabled) return null;
+  if (!SHOW_SMOKY_CURSOR || !enabled) return null;
 
   return (
     <SplashCursor

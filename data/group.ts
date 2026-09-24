@@ -1,7 +1,7 @@
 // Group identity; university and about copy remain ready for your own words.
 export const group = {
-  name: "PROXY PERL",
-  tagline: "Different minds. One shared story.",
+  name: "Proxy Perl",
+  tagline: "Selalu bersinar, seperti berlian",
   description:
     "A university group of twelve. A space for our people, our perspectives, and the moments we share.",
   university: "University / Class",

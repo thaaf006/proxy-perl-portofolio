@@ -272,7 +272,6 @@ export function CamelRunSection() {
         <p className="eyebrow"><span>05 /</span> Side quest</p>
         <div className="camel-run-heading">
           <h2>CAMEL<br />RUN_</h2>
-          <p>A tiny break before EOF.</p>
         </div>
         <div className="camel-game-shell">
           <div className="camel-game-score" aria-live="polite">

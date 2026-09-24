@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Shuffle from "@/components/Shuffle";
 import { useLandingReady } from "./LandingIntro";
 
-const identity = "PROXY\nPERL";
+const identity = "Proxy Perl";
 
 export function HeroIdentity() {
   const ready = useLandingReady();
@@ -20,28 +20,30 @@ export function HeroIdentity() {
 
   return (
     <span className="hero-identity" aria-hidden="true">
-      {decode ? (
-        <Shuffle
-          text={identity}
-          tag="span"
-          className="hero-identity-shuffle"
-          textAlign="left"
-          shuffleDirection="left"
-          duration={0.42}
-          stagger={0.022}
-          shuffleTimes={2}
-          scrambleCharset=""
-          animationMode="evenodd"
-          onShuffleComplete={undefined}
-          colorFrom={undefined}
-          colorTo={undefined}
-          triggerOnce
-          triggerOnHover={false}
-          respectReducedMotion
-        />
-      ) : (
-        <span className="hero-identity-static">{identity}</span>
-      )}
+      <span className="hero-identity-text">
+        {decode ? (
+          <Shuffle
+            text={identity}
+            tag="span"
+            className="hero-identity-shuffle"
+            textAlign="center"
+            shuffleDirection="left"
+            duration={0.42}
+            stagger={0.022}
+            shuffleTimes={2}
+            scrambleCharset=""
+            animationMode="evenodd"
+            onShuffleComplete={undefined}
+            colorFrom={undefined}
+            colorTo={undefined}
+            triggerOnce
+            triggerOnHover={false}
+            respectReducedMotion
+          />
+        ) : (
+          <span className="hero-identity-static">{identity}</span>
+        )}
+      </span>
       <span className="code-caret" aria-hidden="true">
         _
       </span>

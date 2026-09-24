@@ -1,4 +1,4 @@
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { ArrowDownRight } from "lucide-react";
 import { group } from "@/data/group";
 import { Photo } from "@/components/shared/Photo";
 import { HeroEntrance } from "@/components/shared/HeroEntrance";
@@ -12,9 +12,6 @@ export function HeroSection() {
       <div className="container hero-content">
         <HeroEntrance>
           <div className="hero-heading">
-            <p className="eyebrow" data-enter>
-              <span>01 /</span> {group.name}
-            </p>
             <h1 aria-label={`We are ${group.name}`}>
               <span className="hero-mask">
                 <span className="hero-kicker" data-enter="line">
@@ -27,15 +24,6 @@ export function HeroSection() {
             </h1>
           </div>
           <div className="hero-aside">
-            <div className="hero-intro" data-enter>
-              <span className="technical-label">{"// MORE THAN A LANGUAGE"}</span>
-              <p className="hero-statement">Not just a programming language.</p>
-              <p className="hero-description">
-                Twelve people, different stories,
-                <br />
-                one group to call ours.
-              </p>
-            </div>
             <div data-enter>
               <a className="primary-link" href="#members">
                 <span>MEET THE MEMBERS</span>
@@ -53,15 +41,6 @@ export function HeroSection() {
             sizes="100vw"
           />
         )}
-        <div className="hero-bottom">
-          <span>12 PEOPLE</span>
-          <a href="#about">
-            SCROLL <ArrowDownRight size={15} />
-          </a>
-          <span>
-            {group.university} <ArrowUpRight size={13} />
-          </span>
-        </div>
       </div>
     </section>
   );

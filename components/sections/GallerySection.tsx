@@ -8,7 +8,6 @@ export function GallerySection() {
           number="04"
           label="Shared memories"
           title="The in-between moments."
-          description="The moments we chose to keep."
         />
         <GalleryGrid />
       </div>

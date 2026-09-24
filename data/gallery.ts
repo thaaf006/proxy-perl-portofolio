@@ -32,6 +32,12 @@ export const gallery: GalleryItem[] = [
     src: "/gallery/documentation-01.jpg",
   },
   {
+    id: "gallery-06",
+    alt: "Group memory photograph",
+    caption: "Pekan Ilkomerz Day 4",
+    src: "/gallery/documentation-06.png",
+  },
+  {
     id: "gallery-04",
     alt: "Group memory photograph",
     caption: "Latihan Komtroopers",

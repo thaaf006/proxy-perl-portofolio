@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
-import { PixelCamel } from "@/components/shared/PixelCamel";
+import { CamelGameSprite } from "@/components/shared/CamelGameSprite";
 
 type GameStatus = "ready" | "running" | "gameover";
 type ObstacleType = "rock" | "crate" | "perl";
@@ -35,6 +35,7 @@ export function CamelRunSection() {
   const runtime = useRef({
     status: "ready" as GameStatus,
     elapsed: 0,
+    distance: 0,
     last: 0,
     lastPaintedScore: -1,
     nextSpawn: 1100,
@@ -104,6 +105,7 @@ export function CamelRunSection() {
     rafRef.current = 0;
     game.status = "running";
     game.elapsed = 0;
+    game.distance = 0;
     game.last = 0;
     game.lastPaintedScore = -1;
     game.nextSpawn = 950;
@@ -117,6 +119,8 @@ export function CamelRunSection() {
       obstacleRefs.current[index]?.style.setProperty("display", "none");
     });
     camelRef.current?.style.setProperty("transform", "translate3d(0, 0, 0)");
+    camelRef.current?.removeAttribute("data-airborne");
+    camelRef.current?.firstElementChild?.setAttribute("style", "background-position: 0px 0px;");
     setScore(0);
     setStatus("running");
     scheduleFrame();
@@ -142,6 +146,7 @@ export function CamelRunSection() {
       "transform",
       `translate3d(0, ${game.playerY}px, 0)`,
     );
+    camelRef.current?.toggleAttribute("data-airborne", game.playerY < -0.5);
 
     if (game.nextSpawn <= 0) {
       const freeIndex = game.obstacles.findIndex((obstacle) => !obstacle.active);
@@ -167,6 +172,17 @@ export function CamelRunSection() {
 
     const compact = stage.clientWidth < 600;
     const camelX = compact ? 32 : 58;
+    const sprite = camelRef.current?.firstElementChild as HTMLElement | null;
+    const frameWidth = compact ? 58 : 68;
+    const frameDistance = compact ? 10 : 12;
+    game.distance += game.speed * delta;
+    if (game.playerY >= -0.5) {
+      const runFrame = Math.floor(game.distance / frameDistance) % 5;
+      if (sprite) {
+        sprite.style.backgroundPosition = `${-runFrame * frameWidth}px 0px`;
+        sprite.dataset.runFrame = String(runFrame);
+      }
+    }
     const camelWidth = compact ? 58 : 68;
     const camelHeight = compact ? 38 : 44;
 
@@ -289,7 +305,7 @@ export function CamelRunSection() {
               <span>$</span><span>{"{}"}</span><span>%</span>
             </div>
             <div ref={camelRef} className="camel-game-player" aria-hidden="true">
-              <PixelCamel state={status === "running" ? "run" : "idle"} label="" />
+              <CamelGameSprite />
             </div>
             {obstacleTypes.map((type, index) => (
               <div

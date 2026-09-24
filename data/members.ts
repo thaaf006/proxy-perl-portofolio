@@ -24,17 +24,19 @@ export const members: Member[] = [
   {
     id: "member-02",
     name: "Fahira Fasya",
+    nickname: "Fasya",
     role: "PJK",
-    origin: "xxxxx",
-    birthday: "xxxxxx",
-    hobbies: ["xxxxx"],
-    funFact: "xxxx",
-    image: "/members/member-kafahira.png",
+    origin: "Medan",
+    birthday: "17 Maret 2006",
+    hobbies: ["Baca buku", "Dengerin musik"],
+    funFact: "Cat lovers tapi alergi kucing",
+    image: "/members/member-fasya.png",
     instagram: "https://www.instagram.com/fasyafhr",
   },
   {
     id: "member-01",
     name: "Althaaf Bintang Evandhika",
+    nickname: "Althaaf",
     role: "Leader",
     origin: "Tangerang",
     birthday: "16 Desember 2006",
@@ -47,6 +49,7 @@ export const members: Member[] = [
   {
     id: "member-03",
     name: "Muhammad Davian Shah",
+    nickname: "Davian",
     role: "Member",
     origin: "Tangerang",
     birthday: "03 Januari 2007",
@@ -59,6 +62,7 @@ export const members: Member[] = [
   {
     id: "member-04",
     name: "Kornelius Christianto Putra Prasodjo",
+    nickname: "Kornel, Kor, Nel",
     role: "Member",
     origin: "Jakarta Timur",
     birthday: "5 Mei 2007",
@@ -71,6 +75,7 @@ export const members: Member[] = [
   {
     id: "member-05",
     name: "Muhammad Dzaky Danial",
+    nickname: "Aael, Danial",
     role: "Member",
     origin: "Batam",
     birthday: "06 Januari 2006",
@@ -82,6 +87,7 @@ export const members: Member[] = [
   {
     id: "member-06",
     name: "Arzila Dwinda",
+    nickname: "Arzila",
     role: "Member",
     origin: "Riau",
     birthday: "24 November 2006",
@@ -93,6 +99,7 @@ export const members: Member[] = [
   {
     id: "member-07",
     name: "Raihan Rizky Hidayat",
+    nickname: "Raihan",
     role: "Member",
     origin: "Sukabumi",
     birthday: "5 Desember 2006",
@@ -104,6 +111,7 @@ export const members: Member[] = [
   {
     id: "member-08",
     name: "Malika Nazhifah Nur Ramadhani",
+    nickname: "Malika",
     role: "Member",
     origin: "Jakarta",
     birthday: "7 Oktober 2006",
@@ -115,6 +123,7 @@ export const members: Member[] = [
   {
     id: "member-09",
     name: "Aditya Triamaliza",
+    nickname: "Aditya",
     role: "Member",
     origin: "Padang",
     birthday: "21 Juni 2007",
@@ -126,6 +135,7 @@ export const members: Member[] = [
   {
     id: "member-10",
     name: "Nisrina Nailah Rayendra",
+    nickname: "Nisrina",
     role: "Member",
     origin: "Bogor",
     birthday: "22 Februari 2007",
@@ -137,6 +147,7 @@ export const members: Member[] = [
   {
     id: "member11",
     name: "Ahmad Al Farizi",
+    nickname: "Fariz",
     role: "Member",
     origin: "Padang",
     birthday: "16 Oktober 2006",
@@ -147,7 +158,8 @@ export const members: Member[] = [
   },
   {
     id: "member-12",
-    name: " Fachri Althaf Azizi",
+    name: "Fachri Althaf Azizi",
+    nickname: "Fachri",
     role: "Member",
     nim: "GXXXXXXXX",
     origin: "Yogyakarta",

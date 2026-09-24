@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { animate, motion } from "motion/react";
+import { motion } from "motion/react";
 import { group } from "@/data/group";
 import { members } from "@/data/members";
 import { easeOut } from "@/lib/motion";
@@ -43,16 +43,18 @@ export function LandingIntro({ children }: { children: React.ReactNode }) {
       /* The intro still completes when storage is unavailable. */
     }
 
-    const progressAnimation = animate(0, 100, {
-      duration,
-      ease: [0.45, 0, 0.2, 1],
-      onUpdate: (latest) => setProgress(Math.round(latest)),
-    });
+    let progressFrame = 0;
+    const startedAt = performance.now();
+    const tickProgress = (now: number) => {
+      const latest = Math.min(100, ((now - startedAt) / (duration * 1000)) * 100);
+      setProgress(Math.round(latest));
+      if (latest < 100 && !finished) progressFrame = requestAnimationFrame(tickProgress);
+    };
 
     const finish = () => {
       if (finished) return;
       finished = true;
-      progressAnimation.stop();
+      cancelAnimationFrame(progressFrame);
       timers.forEach(clearTimeout);
       setProgress(100);
       setPhase("ready");
@@ -61,14 +63,17 @@ export function LandingIntro({ children }: { children: React.ReactNode }) {
       window.removeEventListener("pointerdown", finish);
     };
 
+    progressFrame = requestAnimationFrame(tickProgress);
     timers.push(setTimeout(() => setPhase("exit"), duration * 1000 + 160));
     timers.push(setTimeout(finish, duration * 1000 + 540));
+    // Never leave the splash screen blocking the app if hydration is delayed.
+    timers.push(setTimeout(finish, 3500));
     window.addEventListener("keydown", finish);
     window.addEventListener("pointerdown", finish);
 
     return () => {
       finished = true;
-      progressAnimation.stop();
+      cancelAnimationFrame(progressFrame);
       timers.forEach(clearTimeout);
       window.removeEventListener("keydown", finish);
       window.removeEventListener("pointerdown", finish);

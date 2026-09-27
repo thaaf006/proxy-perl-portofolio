@@ -1,6 +1,6 @@
 "use client";
 import { Dialog } from "@base-ui/react/dialog";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, FileText } from "lucide-react";
 import type { Member } from "@/data/members";
 import { Photo } from "@/components/shared/Photo";
 import { MemberDetail } from "./MemberDetail";
@@ -21,6 +21,12 @@ function GithubIcon() {
       <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.61-3.37-1.18-3.37-1.18-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1.01.07 1.54 1.04 1.54 1.04.9 1.54 2.36 1.1 2.94.84.09-.65.35-1.1.64-1.36-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.55 9.55 0 0 1 12 7.87c.85 0 1.7.12 2.49.36 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.73c0 .27.18.58.69.48A10 10 0 0 0 12 2Z" fill="currentColor"/>
     </svg>
   );
+}
+
+function cvUrl(value?: string) {
+  return value?.startsWith("/cv/") && value.toLowerCase().endsWith(".pdf")
+    ? value
+    : undefined;
 }
 
 export function MemberCard({
@@ -96,6 +102,16 @@ export function MemberCard({
           {member.github ? (
             <a href={member.github} target="_blank" rel="noopener noreferrer" aria-label={member.name + " GitHub"}>
               <GithubIcon />
+            </a>
+          ) : null}
+          {cvUrl(member.cv) ? (
+            <a
+              href={cvUrl(member.cv)}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${member.name}'s CV`}
+            >
+              <FileText size={18} aria-hidden="true" />
             </a>
           ) : null}
         </div>

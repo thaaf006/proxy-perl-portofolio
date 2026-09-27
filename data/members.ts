@@ -19,7 +19,7 @@ export interface Member {
 }
 
 // Add images as image: "/members/member-01.jpg" after placing them in public/members.
-// Use full https:// social URLs and a plain email address. Leave unavailable fields undefined.
+// Use full https:// social URLs, /cv/*.pdf paths, and a plain email address. Leave unavailable fields undefined.
 export const members: Member[] = [
   {
     id: "member-02",
@@ -32,6 +32,7 @@ export const members: Member[] = [
     funFact: "Cat lovers tapi alergi kucing",
     image: "/members/member-fasya.png",
     instagram: "https://www.instagram.com/fasyafhr",
+      cv: "/cv/member-02.pdf",
   },
   {
     id: "member-01",
@@ -45,6 +46,7 @@ export const members: Member[] = [
     image: "/members/member-01.jpg",
     instagram: "https://www.instagram.com/althaaf.be",
     github: "https://github.com/thaaf006",
+      cv: "/cv/cv-01.pdf",
   },
   {
     id: "member-03",
@@ -58,6 +60,7 @@ export const members: Member[] = [
     funFact: "Suka makan mie",
     instagram: "https://www.instagram.com/davi.an__",
     github: "https://github.com/DavianShah",
+      cv: "/cv/cv-03.pdf",
   },
   {
     id: "member-04",
@@ -71,6 +74,7 @@ export const members: Member[] = [
     funFact: "ngepush dari mythic romawi ke immortal sehari",
     instagram: "https://www.instagram.com/kornelius_christopras",
     github: "https://github.com/CoRd1Ve",
+      cv: "/cv/cv-04.pdf",
   },
   {
     id: "member-05",
@@ -83,6 +87,7 @@ export const members: Member[] = [
     image: "/members/member-dzaky.png",
     funFact: "cadel d kata mama",
     instagram: "https://www.instagram.com/daniaaell",
+      cv: "/cv/cv-05.pdf",
   },
   {
     id: "member-06",
@@ -95,6 +100,7 @@ export const members: Member[] = [
     funFact: "susah tidur + susah bangun",
     image: "/members/member-06.png",
     instagram: "https://www.instagram.com/oneendonlyone",
+      cv: "/cv/cv-06.pdf",
   },
   {
     id: "member-07",
@@ -107,6 +113,7 @@ export const members: Member[] = [
     funFact: "ga bisa jongkok",
     image: "/members/member-07.png",
     instagram: "https://www.instagram.com/raihaanrh",
+      cv: "/cv/cv-07.pdf",
   },
   {
     id: "member-08",
@@ -119,6 +126,8 @@ export const members: Member[] = [
     funFact: "Jalannya cepet",
     image: "/members/member-08-malika.png",
     instagram: "https://www.instagram.com/psychao_07",
+    github: "https://github.com/Nazhifah07",
+      cv: "/cv/cv-08.pdf",
   },
   {
     id: "member-09",
@@ -131,6 +140,7 @@ export const members: Member[] = [
     image: "/members/member-09.png",
     funFact: "apaya",
     instagram: "https://www.instagram.com/_adiit.yaa",
+      cv: "/cv/cv-09.pdf",
   },
   {
     id: "member-10",
@@ -143,6 +153,7 @@ export const members: Member[] = [
     image: "/members/member-nisrina.jpeg",
     funFact: "suka coret coret buku",
     instagram: "https://www.instagram.com/nisndsc",
+      cv: "/cv/cv-10.pdf",
   },
   {
     id: "member11",
@@ -155,6 +166,7 @@ export const members: Member[] = [
     funFact: "sekali tidur bisa diatas 12 jam",
     image: "/members/member11.png",
     instagram: "https://www.instagram.com/achmaadal",
+      cv: "/cv/cv-11.pdf",
   },
   {
     id: "member-12",
@@ -167,7 +179,8 @@ export const members: Member[] = [
     hobbies: ["games"],
     funFact: "Fakta yang menyenangkan",
     image: "/members/member-12.png",
-    instagram: "https://www.instagram.com/fchriazzi"
+    instagram: "https://www.instagram.com/fchriazzi",
+      cv: "/cv/cv-12.pdf",
 
   },
 ];
